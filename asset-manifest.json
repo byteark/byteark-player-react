@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/byteark-player-react/static/css/main.dee1957f.chunk.css",
-    "main.js": "/byteark-player-react/static/js/main.e0d9d0f9.chunk.js",
-    "main.js.map": "/byteark-player-react/static/js/main.e0d9d0f9.chunk.js.map",
+    "main.js": "/byteark-player-react/static/js/main.d528bcfe.chunk.js",
+    "main.js.map": "/byteark-player-react/static/js/main.d528bcfe.chunk.js.map",
     "runtime-main.js": "/byteark-player-react/static/js/runtime-main.fae9a09b.js",
     "runtime-main.js.map": "/byteark-player-react/static/js/runtime-main.fae9a09b.js.map",
     "static/js/2.dd0cc6e1.chunk.js": "/byteark-player-react/static/js/2.dd0cc6e1.chunk.js",
     "static/js/2.dd0cc6e1.chunk.js.map": "/byteark-player-react/static/js/2.dd0cc6e1.chunk.js.map",
     "index.html": "/byteark-player-react/index.html",
-    "precache-manifest.480145ec9e9ba54f56e066b11fa76788.js": "/byteark-player-react/precache-manifest.480145ec9e9ba54f56e066b11fa76788.js",
+    "precache-manifest.81bc13259242723ebab578b44546f9b8.js": "/byteark-player-react/precache-manifest.81bc13259242723ebab578b44546f9b8.js",
     "service-worker.js": "/byteark-player-react/service-worker.js",
     "static/css/main.dee1957f.chunk.css.map": "/byteark-player-react/static/css/main.dee1957f.chunk.css.map",
     "static/js/2.dd0cc6e1.chunk.js.LICENSE.txt": "/byteark-player-react/static/js/2.dd0cc6e1.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.fae9a09b.js",
     "static/js/2.dd0cc6e1.chunk.js",
     "static/css/main.dee1957f.chunk.css",
-    "static/js/main.e0d9d0f9.chunk.js"
+    "static/js/main.d528bcfe.chunk.js"
   ]
 }

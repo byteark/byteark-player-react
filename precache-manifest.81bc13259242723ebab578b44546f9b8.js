@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "c62181a6eb101eee82cff37f2b6b7629",
+    "revision": "f6e89caeecd7040bccc6eeca1f0c893f",
     "url": "/byteark-player-react/index.html"
   },
   {
-    "revision": "5c94801c47e8200ea59f",
+    "revision": "e98a6cd4759486075e7d",
     "url": "/byteark-player-react/static/css/main.dee1957f.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/byteark-player-react/static/js/2.dd0cc6e1.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "5c94801c47e8200ea59f",
-    "url": "/byteark-player-react/static/js/main.e0d9d0f9.chunk.js"
+    "revision": "e98a6cd4759486075e7d",
+    "url": "/byteark-player-react/static/js/main.d528bcfe.chunk.js"
   },
   {
     "revision": "a7a0a730eae9df986499",
