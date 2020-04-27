@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "f6e89caeecd7040bccc6eeca1f0c893f",
+    "revision": "0ac344fd7253810f5655ad35c5ee9e80",
     "url": "/byteark-player-react/index.html"
   },
   {
