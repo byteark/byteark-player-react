@@ -7,7 +7,6 @@ import {
 import SampleBlogPage from './SampleBlogPage.js'
 import SampleFluidPage from './SampleFluidPage.js'
 import SampleFillPage from './SampleFillPage.js'
-import 'byteark-player-react/dist/index.css'
 
 const App = () => {
   return (

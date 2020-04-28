@@ -16,7 +16,7 @@ function defaultCreatePlaceholderFunction(props, { error }) {
 }
 
 function defaultCreatePlayerFunction(videoNode, options, onPlayerReady) {
-  return byteark(videoNode, options, onPlayerReady)
+  return bytearkPlayer(videoNode, options, onPlayerReady)
 }
 
 export class ByteArkPlayerContainer extends React.Component {

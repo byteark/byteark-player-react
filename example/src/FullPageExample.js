@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { ByteArkPlayerContainer } from 'byteark-player-react'
-import 'byteark-player-react/dist/index.css'
 
 const App = () => {
   const options = {

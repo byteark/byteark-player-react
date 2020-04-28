@@ -32,9 +32,7 @@ const SampleBlogPage = () => {
               The following is the most common example for videos that inline with your content.
               This player is created with fluid layout mode, and setting aspect ratio to 16:9.
             </p>
-            <p>
-              <ByteArkPlayerContainer className="mt-4 mb-4" { ...options } />
-            </p>
+            <ByteArkPlayerContainer className="mt-4 mb-4" { ...options } />
           </section>
           <section className="mt-4 mb-4">
             <h2 className="h5">More Examples</h2>
