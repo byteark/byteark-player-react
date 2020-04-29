@@ -12,10 +12,11 @@
 * [API Methods](#api-methods)
 * [Advance Usages](#advance-usages)
     * [Controlling Players](#controlling-players)
+    * [Request Media/Encryption with credentials](#request-media-encryption-with-credentials)
 
 ## Demo
 
-You can try on [the demo page]().
+You can try on [the demo page](https://byteark.github.io/byteark-player-react).
 
 ## Features
 
@@ -234,6 +235,39 @@ const App = () => {
 
 render(<App />, document.getElementById('root'))
 ```
+
+### Request Media/Encryption with credentials
+
+```jsx
+import React from 'react'
+import { render } from 'react-dom'
+import { ByteArkPlayerContainer } from 'byteark-player-react'
+
+const App = () => {
+  const playerOptions = {
+    autoplay: true,
+    fluid: true,
+    sources: {
+      src: 'https://video.example.com/path/to/video/playlist.m3u8',
+      type: 'application/x-mpegURL',
+      // Optional
+      title: 'Video Title'
+    },
+    hlsOptions: {
+      xhrSetup: function(xhr, url) {
+        xhr.withCredentials = true
+      }
+    }
+  }
+
+  const onReady = (newPlayerInstance) => {
+    // The player is ready! Initialize plugins here.
+  }
+
+  return <ByteArkPlayerContainer {...playerOptions} />
+}
+
+
 
 ## License
 
