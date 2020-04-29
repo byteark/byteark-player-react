@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/byteark-player-react/precache-manifest.951ef31118a65c27c9080e7df2f7f8ac.js"
+  "/byteark-player-react/precache-manifest.67cafaa6abc5f7b3954c7b9018e9890a.js"
 );
 
 self.addEventListener('message', (event) => {
