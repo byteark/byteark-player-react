@@ -2,6 +2,21 @@
 
 [![NPM](https://img.shields.io/npm/v/byteark-player-react.svg)](https://www.npmjs.com/package/byteark-player-react) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
+* [Demo](#demo)
+* [Features](#features)
+* [Installation](#installation)
+* [Usages](#usages)
+* [Basic Props](#basic-props)
+    * [Source Object](#source-object)
+* [Callback Props](#callback-props)
+* [API Methods](#api-methods)
+* [Advance Usages](#advance-usages)
+    * [Controlling Players](#controlling-players)
+
+## Demo
+
+You can try on [the demo page]().
+
 ## Features
 
 * Remote player updates. No need to update your code for minor improvements.
@@ -33,11 +48,43 @@ const App = () => {
   const playerOptions = {
     autoplay: true,
     fluid: true,
+    aspectRatio: '16:9',
+    poster: 'https://qoder.byteark.com/images/video-frames/1/GU/cg/1GUcgd3XwsmD-large.jpg'
     sources: {
       src: 'https://video.example.com/path/to/video/playlist.m3u8',
       type: 'application/x-mpegURL',
       // Optional
-      title: 'Video Title'
+      title: 'Video Title',
+      videoId: 'RI2PimuHxDXw',
+      poster: 'https://qoder.byteark.com/images/video-frames/1/GU/cg/1GUcgd3XwsmD-large.jpg'
+    }
+  }
+  return <ByteArkPlayerContainer {...playerOptions} />
+}
+
+render(<App />, document.getElementById('root'))
+```
+
+If the video will be displayed on the fixed-size container,
+you may want to use fill mode instead.
+
+```jsx
+import React from 'react'
+import { render } from 'react-dom'
+import { ByteArkPlayerContainer } from 'byteark-player-react'
+
+const App = () => {
+  const playerOptions = {
+    autoplay: true,
+    fill: true,
+    poster: 'https://qoder.byteark.com/images/video-frames/1/GU/cg/1GUcgd3XwsmD-large.jpg'
+    sources: {
+      src: 'https://video.example.com/path/to/video/playlist.m3u8',
+      type: 'application/x-mpegURL',
+      // Optional
+      title: 'Video Title',
+      videoId: 'RI2PimuHxDXw',
+      poster: 'https://qoder.byteark.com/images/video-frames/1/GU/cg/1GUcgd3XwsmD-large.jpg'
     }
   }
   return <ByteArkPlayerContainer {...playerOptions} />
@@ -69,14 +116,21 @@ without re-creating the player instance. Additional properties will be passed to
 | sources              | Object/Array   | -       | Source of videos to be played.                                               |
 | volume               | Number         | -       | Video's volume, between 0 to 1.                                              |
 
-### Source Props
+You can also use other props not listed here,
+but appear as [VideoJS's options](https://docs.videojs.com/tutorial-options.html#playbackrates).
+However, changing props will not effective after the player is created.
 
-The `sources` object has 2 fields:
+### Source Object
 
-| Name | Type   | Description         |
-|------|--------|---------------------|
-| src  | String | URL to the video.   |
-| type | String | Video content type. |
+The `sources` object has 2 required fields, and more optional field:
+
+| Name    | Type   | Description                            |
+|---------|--------|----------------------------------------|
+| src     | String | URL to the video.                      |
+| type    | String | Video content type.                    |
+| title   | String | Video title to display on the player.  |
+| videoId | String | Video's ID, usaully used on Analytics. |
+| poster  | String | Poster image URL for the video.        |
 
 To provide multiple version of sources, you can use array of source objects.
 
@@ -103,6 +157,83 @@ and some advance behaviours.
 | playerEndpoint            | String   | Endpoint to the video player (without version part).                            |
 | playerJsFileName          | String   | File name of player's JS.                                                       |
 | playerCssFileName         | String   | File name of player's CSS.                                                      |
+
+## Methods
+
+### `getPlayer()`
+
+Return a player instance, if it is created.
+
+## Advance Usages
+
+### Controlling Players
+
+You may access the player directly via `getPlayer()` method,
+or using the player instance that sent from `onReady` callback.
+
+```jsx
+// This following example allows user to play/pause the video playback
+// from custom buttons outside.
+
+import React from 'react'
+import { render } from 'react-dom'
+import { ByteArkPlayerContainer } from 'byteark-player-react'
+
+const App = () => {
+  const playerOptions = {
+    autoplay: true,
+    fluid: true,
+    sources: {
+      src: 'https://video.example.com/path/to/video/playlist.m3u8',
+      type: 'application/x-mpegURL',
+      // Optional
+      title: 'Video Title'
+    }
+  }
+
+  let playerInstance = null
+  const onReady = (newPlayerInstance) => {
+    playerInstance = newPlayerInstance
+  }
+
+  return <div>
+    <ByteArkPlayerContainer {...playerOptions} />
+    <button onClick={() => playerInstance.play()}>Play</button>
+    <button onClick={() => playerInstance.pause()}>Pause</button>
+  </div>
+}
+
+render(<App />, document.getElementById('root'))
+```
+
+### Using VideoJS Plugins
+
+```jsx
+import React from 'react'
+import { render } from 'react-dom'
+import { ByteArkPlayerContainer } from 'byteark-player-react'
+
+const App = () => {
+  const playerOptions = {
+    autoplay: true,
+    fluid: true,
+    sources: {
+      src: 'https://video.example.com/path/to/video/playlist.m3u8',
+      type: 'application/x-mpegURL',
+      // Optional
+      title: 'Video Title'
+    }
+  }
+
+  const onReady = (newPlayerInstance) => {
+    // The player is ready! Initialize plugins here.
+  }
+
+  return <ByteArkPlayerContainer {...playerOptions} />
+}
+
+render(<App />, document.getElementById('root'))
+```
 
 ## License
 
