@@ -13,7 +13,7 @@ const SampleFillApp = () => {
     onPlayerCreated: () => {
       console.log('Created!')
     },
-    onPlayerReady: () => {
+    onReady: () => {
       console.log('Ready!')
     }
   }

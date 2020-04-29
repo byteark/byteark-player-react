@@ -15,8 +15,8 @@ function defaultCreatePlaceholderFunction(props, { error }) {
   )
 }
 
-function defaultCreatePlayerFunction(videoNode, options, onPlayerReady) {
-  return bytearkPlayer(videoNode, options, onPlayerReady)
+function defaultCreatePlayerFunction(videoNode, options, onReady) {
+  return bytearkPlayer(videoNode, options, onReady)
 }
 
 export class ByteArkPlayerContainer extends React.Component {
@@ -29,7 +29,8 @@ export class ByteArkPlayerContainer extends React.Component {
     playerVersion: 'v1',
     playerJsFileName: 'byteark-player.min.js',
     playerCssFileName: 'byteark-player.min.css',
-    playsinline: true
+    playsinline: true,
+    techCanOverridePoster: false
   }
 
   constructor(props) {
@@ -93,9 +94,9 @@ export class ByteArkPlayerContainer extends React.Component {
     }
   }
 
-  onPlayerReady = () => {
-    if (this.props.onPlayerReady) {
-      this.props.onPlayerReady(this.player)
+  onReady = () => {
+    if (this.props.onReady) {
+      this.props.onReady(this.player)
     }
   }
 
@@ -145,7 +146,7 @@ export class ByteArkPlayerContainer extends React.Component {
     this.player = this.props.createPlayerFunction(
       this.videoNode,
       this.props,
-      this.onPlayerReady
+      this.onReady
     )
     this.onPlayerCreated()
   }
@@ -179,6 +180,17 @@ export class ByteArkPlayerContainer extends React.Component {
     const videoStyle = {}
     if (!this.state.loaded) {
       videoStyle.display = 'none'
+    }
+
+    if (this.props.audioOnlyMode) {
+      return (
+        <audio
+          playsInline
+          ref={this.onVideoNodeCreated}
+          className={`video-js ${this.props.className}`}
+          style={videoStyle}
+        />
+      )
     }
 
     return (

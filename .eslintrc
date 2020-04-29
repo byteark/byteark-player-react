@@ -31,6 +31,6 @@
     "import/export": 0
   },
   "globals": {
-    "byteark": "writable"
+    "bytearkPlayer": "writable"
   }
 }

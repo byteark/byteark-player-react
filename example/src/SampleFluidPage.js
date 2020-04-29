@@ -14,7 +14,7 @@ const SampleFluidApp = () => {
     onPlayerCreated: () => {
       console.log('Created!')
     },
-    onPlayerReady: () => {
+    onReady: () => {
       console.log('Ready!')
     }
   }

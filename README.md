@@ -89,7 +89,7 @@ directly to the ByteArk Player, and also, to the VideoJS's instance.
 |----------------------|----------|-----------------------|-----------------------------------------------------------------------------|
 | onPlayerCreated      | Function | `(player)`            | Callback function to be called when a player instance is created.           |
 | onPlayerLoadingError | Function | `({ code, message })` | Callback function to be called when there're an error about loading player. |
-| onPlayerReady        | Function | `(player)`            | Callback function to be called when a player instance is ready.             |
+| onReady              | Function | `(player)`            | Callback function to be called when a player instance is ready.             |
 
 ## Advance Props
 

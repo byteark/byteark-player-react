@@ -13,7 +13,7 @@ const App = () => {
     onPlayerCreated: () => {
       console.log('Created!')
     },
-    onPlayerReady: () => {
+    onReady: () => {
       console.log('Ready!')
     }
   }
