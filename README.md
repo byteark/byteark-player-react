@@ -253,9 +253,11 @@ const App = () => {
       // Optional
       title: 'Video Title'
     },
-    hlsOptions: {
-      xhrSetup: function(xhr, url) {
-        xhr.withCredentials = true
+    html5: {
+      hlsjs: {
+        xhrSetup: function(xhr, url) {
+          xhr.withCredentials = true
+        }
       }
     }
   }
