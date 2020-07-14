@@ -7,7 +7,7 @@ export default function VideoList(props) {
   return (
     <div>
       <h2 className="h6 mb-3">Recommended Videos</h2>
-      <ul class="list-unstyled">
+      <ul className="list-unstyled">
         {
           props.videos.map(video => (
             <VideoListItem
