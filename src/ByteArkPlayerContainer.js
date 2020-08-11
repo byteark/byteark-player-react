@@ -16,17 +16,27 @@ function defaultCreatePlaceholderFunction(props, { error }) {
 }
 
 function defaultCreatePlayerFunction(videoNode, options, onReady) {
-  return bytearkPlayer(videoNode, options, onReady)
+  return bytearkPlayer.init(videoNode, options, onReady)
+}
+
+async function defautlSetupPlayerFunction(
+  options,
+  loaderFunction,
+  loadPluginOptions
+) {
+  await bytearkPlayer.setup(options, loaderFunction, loadPluginOptions)
 }
 
 export class ByteArkPlayerContainer extends React.Component {
   static defaultProps = {
     autoplay: true,
     controls: true,
+    autoplayadsmuted: false,
     createPlaceholderFunction: defaultCreatePlaceholderFunction,
     createPlayerFunction: defaultCreatePlayerFunction,
-    playerEndpoint: 'https://byteark-sdk.cdn.byteark.com/player/',
-    playerVersion: 'v1',
+    setupPlayerFunction: defautlSetupPlayerFunction,
+    playerEndpoint: 'https://byteark-sdk.cdn.byteark.com/player-core/',
+    playerVersion: 'v2',
     playerJsFileName: 'byteark-player.min.js',
     playerCssFileName: 'byteark-player.min.css',
     playsinline: true,
@@ -61,10 +71,6 @@ export class ByteArkPlayerContainer extends React.Component {
   }
 
   onPlayerLoaded = () => {
-    this.setState({
-      loaded: true
-    })
-
     if (this.props.onPlayerLoaded) {
       try {
         this.props.onPlayerLoaded()
@@ -88,6 +94,30 @@ export class ByteArkPlayerContainer extends React.Component {
     }
   }
 
+  onPlayerSetup = () => {
+    this.setState({
+      loaded: true
+    })
+
+    if (this.props.onPlayerSetup) {
+      this.props.onPlayerSetup()
+    }
+  }
+
+  onPlayerSetupError = (error, originalError) => {
+    this.setState({
+      error
+    })
+
+    if (this.props.onPlayerSetupError) {
+      try {
+        this.props.onPlayerSetupError(error, originalError)
+      } catch (err) {
+        console.error(err)
+      }
+    }
+  }
+
   onPlayerCreated = () => {
     if (this.props.onPlayerCreated) {
       this.props.onPlayerCreated(this.player)
@@ -102,6 +132,7 @@ export class ByteArkPlayerContainer extends React.Component {
 
   componentDidMount = async () => {
     await this.loadPlayerResources()
+    await this.setupPlayer()
     await this.createPlayerInstance()
   }
 
@@ -142,12 +173,42 @@ export class ByteArkPlayerContainer extends React.Component {
     this.onPlayerLoaded()
   }
 
-  createPlayerInstance = () => {
+  async setupPlayer() {
+    try {
+      await this.props.setupPlayerFunction(this.props, loadScriptOrStyle)
+
+      this.onPlayerSetup()
+    } catch (originalError) {
+      this.onPlayerSetupError(
+        {
+          code: 'ERROR_BYTEARK_PLAYER_REACT_100001',
+          message: 'Sorry, something wrong when loading the video player.',
+          messageSecondary: 'Please refresh the page to try again.'
+        },
+        originalError
+      )
+      // Rethrow to stop following statements.
+      throw originalError
+    }
+  }
+
+  createPlayerInstance = async () => {
+    // check can autoplay video
+    const autoplayResult_ = await window.bytearkPlayer.canAutoplay(this.props)
+
+    const options = {
+      ...this.props,
+      autoplayResult_,
+      autoplay: autoplayResult_.autoplay,
+      muted: autoplayResult_.muted
+    }
+
     this.player = this.props.createPlayerFunction(
       this.videoNode,
-      this.props,
+      options,
       this.onReady
     )
+
     this.onPlayerCreated()
   }
 
