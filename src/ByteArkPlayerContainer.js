@@ -19,7 +19,7 @@ function defaultCreatePlayerFunction(videoNode, options, onReady) {
   return bytearkPlayer.init(videoNode, options, onReady)
 }
 
-async function defautlSetupPlayerFunction(
+async function defaultSetupPlayerFunction(
   options,
   loaderFunction,
   loadPluginOptions
@@ -34,7 +34,7 @@ export class ByteArkPlayerContainer extends React.Component {
     autoplayadsmuted: false,
     createPlaceholderFunction: defaultCreatePlaceholderFunction,
     createPlayerFunction: defaultCreatePlayerFunction,
-    setupPlayerFunction: defautlSetupPlayerFunction,
+    setupPlayerFunction: defaultSetupPlayerFunction,
     playerEndpoint: 'https://byteark-sdk.cdn.byteark.com/player-core/',
     playerVersion: 'v2',
     playerJsFileName: 'byteark-player.min.js',
@@ -48,6 +48,7 @@ export class ByteArkPlayerContainer extends React.Component {
 
     this.player = null
     this.state = {
+      mounted: false,
       loaded: false,
       ready: false,
       error: null
@@ -130,10 +131,19 @@ export class ByteArkPlayerContainer extends React.Component {
     }
   }
 
-  componentDidMount = async () => {
+  componentDidMount() {
+    this.initializePlayer()
+  }
+
+  async initializePlayer() {
     await this.loadPlayerResources()
-    await this.setupPlayer()
-    await this.createPlayerInstance()
+
+    // We'll not create a real player on server-side rendering.
+    const isClient = (typeof window !== 'undefined')
+    if (isClient) {
+      await this.setupPlayer()
+      await this.createPlayerInstance()
+    }
   }
 
   async loadPlayerResources() {
