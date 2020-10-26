@@ -2,6 +2,7 @@ import React from 'react'
 import PlayerPlaceholder from './PlayerPlaceholder.js'
 import loadScriptOrStyle from './loadScriptOrStyle.js'
 import updatePlayerProps from './updatePlayerProps.js'
+import { unstable_renderSubtreeIntoContainer } from 'react-dom'
 
 function defaultCreatePlaceholderFunction(props, { error }) {
   return (
@@ -136,13 +137,23 @@ export class ByteArkPlayerContainer extends React.Component {
   }
 
   async initializePlayer() {
-    await this.loadPlayerResources()
+    if (this.initializeInProgress) {
+      return
+    }
 
-    // We'll not create a real player on server-side rendering.
-    const isClient = (typeof window !== 'undefined')
-    if (isClient) {
-      await this.setupPlayer()
-      await this.createPlayerInstance()
+    this.initializeInProgress = true
+    try {
+      await this.loadPlayerResources()
+      // We'll not create a real player on server-side rendering.
+      const isClient = this.canUserDOM()
+      if (isClient) {
+        await this.setupPlayer()
+        await this.createPlayerInstance()
+      }
+      this.initializeInProgress = false
+    } catch (err) {
+      this.initializeInProgress = false
+      throw err
     }
   }
 
@@ -184,9 +195,12 @@ export class ByteArkPlayerContainer extends React.Component {
   }
 
   async setupPlayer() {
+    if (this.setupPlayerPromise) {
+      return this.setupPlayerPromise
+    }
+
     try {
       await this.props.setupPlayerFunction(this.props, loadScriptOrStyle)
-
       this.onPlayerSetup()
     } catch (originalError) {
       this.onPlayerSetupError(
@@ -279,5 +293,11 @@ export class ByteArkPlayerContainer extends React.Component {
       return
     }
     updatePlayerProps(this.player, this.props, nextProps)
+  }
+
+  canUserDOM() {
+    return typeof window !== 'undefined'
+      && window.document
+      && window.document.createElement
   }
 }
