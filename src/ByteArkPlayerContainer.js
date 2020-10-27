@@ -137,6 +137,13 @@ export class ByteArkPlayerContainer extends React.Component {
   }
 
   async initializePlayer() {
+    // We'll not create a real player on server-side rendering.
+    const isClient = this.canUserDOM()
+    if (!isClient) {
+      return
+    }
+
+    // Prevent double initialize
     if (this.initializeInProgress) {
       return
     }
@@ -144,12 +151,8 @@ export class ByteArkPlayerContainer extends React.Component {
     this.initializeInProgress = true
     try {
       await this.loadPlayerResources()
-      // We'll not create a real player on server-side rendering.
-      const isClient = this.canUserDOM()
-      if (isClient) {
-        await this.setupPlayer()
-        await this.createPlayerInstance()
-      }
+      await this.setupPlayer()
+      await this.createPlayerInstance()
       this.initializeInProgress = false
     } catch (err) {
       this.initializeInProgress = false
@@ -200,7 +203,9 @@ export class ByteArkPlayerContainer extends React.Component {
     }
 
     try {
-      await this.props.setupPlayerFunction(this.props, loadScriptOrStyle)
+      const setupPlayerFunction = this.props.setupPlayerFunction || defaultSetupPlayerFunction
+      await setupPlayerFunction(this.props, loadScriptOrStyle)
+
       this.onPlayerSetup()
     } catch (originalError) {
       this.onPlayerSetupError(
@@ -227,7 +232,8 @@ export class ByteArkPlayerContainer extends React.Component {
       muted: autoplayResult_.muted
     }
 
-    this.player = this.props.createPlayerFunction(
+    const createPlayerFunction = this.props.createPlayerFunction || defaultCreatePlayerFunction
+    this.player = createPlayerFunction(
       this.videoNode,
       options,
       this.onReady
@@ -257,7 +263,8 @@ export class ByteArkPlayerContainer extends React.Component {
   }
 
   renderPlaceholder() {
-    return this.props.createPlaceholderFunction(this.props, this.state)
+    const createPlaceholderFunction = this.props.createPlaceholderFunction || defaultCreatePlaceholderFunction
+    return createPlaceholderFunction(this.props, this.state)
   }
 
   renderPlayer() {
