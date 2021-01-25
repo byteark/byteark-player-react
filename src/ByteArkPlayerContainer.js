@@ -269,6 +269,22 @@ export class ByteArkPlayerContainer extends React.Component {
   renderPlayer() {
     // Video element should be there since the start, but hidden.
     const videoStyle = {}
+    let videoClasses = ''
+
+    if (this.props.className) {
+      videoClasses = this.props.className
+    }
+
+    if (this.props.fill === 'fluid') {
+      if (this.props.aspectRatio === '4:3') {
+        videoClasses += ' vjs-4-3'
+      }
+
+      if (this.props.aspectRatio === '16:9') {
+        videoClasses += ' vjs-16-9'
+      }
+    }
+
     if (!this.state.loaded) {
       videoStyle.display = 'none'
     }
@@ -288,7 +304,7 @@ export class ByteArkPlayerContainer extends React.Component {
       <video
         playsInline
         ref={this.onVideoNodeCreated}
-        className={`video-js ${this.props.className}`}
+        className={`video-js ${videoClasses}`}
         style={videoStyle}
       />
     )
