@@ -2,7 +2,6 @@ import React from 'react'
 import PlayerPlaceholder from './PlayerPlaceholder.js'
 import loadScriptOrStyle from './loadScriptOrStyle.js'
 import updatePlayerProps from './updatePlayerProps.js'
-import { unstable_renderSubtreeIntoContainer } from 'react-dom'
 
 function defaultCreatePlaceholderFunction(props, { error }) {
   return (
