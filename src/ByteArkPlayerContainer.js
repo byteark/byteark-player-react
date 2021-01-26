@@ -255,7 +255,7 @@ export class ByteArkPlayerContainer extends React.Component {
   render() {
     return (
       <React.Fragment>
-        {this.state.loaded ? null : this.renderPlaceholder()}
+        {this.renderPlaceholder()}
         {this.state.error ? null : this.renderPlayer()}
       </React.Fragment>
     )

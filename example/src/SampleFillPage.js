@@ -20,7 +20,7 @@ const SampleFillApp = () => {
 
   return (
     <React.Fragment>
-      <div style={{width: '100%', height: '75vh'}}>
+      <div style={{position: 'relative', width: '100%', height: '75vh'}}>
         <ByteArkPlayerContainer
           sources={video}
           poster={video.poster}

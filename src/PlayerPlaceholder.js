@@ -11,7 +11,7 @@ function calculatePlaceholderPaddingTopFromAspectRatio(aspectRatio) {
 
 export default function PlayerPlaceholder(props) {
   const placeholderCustomStyle = {
-    position: 'relative',
+    position: 'absolute',
     width: '100%',
     minWidth: '100%',
     backgroundColor: '#000000'

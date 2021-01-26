@@ -24,12 +24,14 @@ const SampleFluidApp = () => {
       <SiteNav />
       <div className="container">
         <div className="row mt-4">
-          <div className="col-sm-8">
-            <ByteArkPlayerContainer
-              sources={video}
-              poster={video.poster}
-              { ...options }
-            />
+          <div className="col-sm-8" style={{position: 'relative'}}>
+            <div className="player-container" style={{position: 'relative'}}>
+              <ByteArkPlayerContainer
+                sources={video}
+                poster={video.poster}
+                { ...options }
+              />
+            </div>
             <div className="mt-4">
               <VideoInfo title={video.title} description={video.description} />
             </div>
