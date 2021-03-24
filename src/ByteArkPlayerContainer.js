@@ -3,17 +3,13 @@ import PlayerPlaceholder from './PlayerPlaceholder.js'
 import loadScriptOrStyle from './loadScriptOrStyle.js'
 import updatePlayerProps from './updatePlayerProps.js'
 
-function defaultCreatePlaceholderFunction(
-  props,
-  { error, loaded },
-  onClickPlaceholder
-) {
+function defaultCreatePlaceholderFunction(props, state, onClickPlaceholder) {
   return (
     <PlayerPlaceholder
       onClick={onClickPlaceholder}
       className={props.className}
-      error={error}
-      loaded={loaded}
+      error={state.error}
+      loaded={state.loaded}
       playerOptions={props}
     />
   )
@@ -249,7 +245,9 @@ export class ByteArkPlayerContainer extends React.Component {
   componentWillUnmount() {
     if (this.player) {
       this.player.dispose()
-      this.ready = false
+      this.setState({
+        ready: false
+      })
     }
   }
 
