@@ -5,14 +5,15 @@
 * [Demo](#demo)
 * [Features](#features)
 * [Installation](#installation)
-* [Usages](#usages)
+* [Usage](#usage)
 * [Basic Props](#basic-props)
     * [Source Object](#source-object)
 * [Callback Props](#callback-props)
+* [Advanced Props](#advanced-props)
 * [API Methods](#api-methods)
-* [Advance Usages](#advance-usages)
+* [Advanced Usages](#advanced-usages)
     * [Controlling Players](#controlling-players)
-    * [Request Media/Encryption with credentials](#request-media-encryption-with-credentials)
+    * [Request Media/Encryption with credentials](#request-mediaencryption-with-credentials)
 
 ## Demo
 
@@ -114,6 +115,7 @@ without re-creating the player instance. Additional properties will be passed to
 | poster               | String         | -       | Image to be show before the video is playing.                                |
 | preload              | String         | -       | Preload the video before play. (none|metadata|auto)                          |
 | responsive           | Boolean        | -       | Auto show/hide controls depending on the screen size.                        |
+| seekButtons          | Boolean        | false   | Show 10 seconds seek buttons and allow double-tap to seek on mobile.         |
 | sources              | Object/Array   | -       | Source of videos to be played.                                               |
 | volume               | Number         | -       | Video's volume, between 0 to 1.                                              |
 
@@ -146,7 +148,7 @@ directly to the ByteArk Player, and also, to the VideoJS's instance.
 | onPlayerLoadingError | Function | `({ code, message })` | Callback function to be called when there're an error about loading player. |
 | onReady              | Function | `(player)`            | Callback function to be called when a player instance is ready.             |
 
-## Advance Props
+## Advanced Props
 
 We also provide some ways to custom the appearance of the video placeholder,
 and some advance behaviours.
@@ -155,17 +157,32 @@ and some advance behaviours.
 |---------------------------|----------|---------------------------------------------------------------------------------|
 | createPlaceholderFunction | Function | Custom video placeholder. This function should return a React component.        |
 | createPlayerFunction      | Function | Custom video instance. This function should return a VideoJS's player instance. |
+| lazyload                  | Boolean  | The player loads its asset files once it got rendered on the webpage. By passing this prop, the player then loads its asset files once the user clicked on the player instead. |
 | playerEndpoint            | String   | Endpoint to the video player (without version part).                            |
 | playerJsFileName          | String   | File name of player's JS.                                                       |
 | playerCssFileName         | String   | File name of player's CSS.                                                      |
 
-## Methods
+```jsx
+import { ByteArkPlayerContainer } from 'byteark-player-react'
+
+const App = () => {
+  // An Advanced Props Example
+  return
+    <ByteArkPlayerContainer
+      {...playerOptions}
+      playerEndpoint='my-custom-endpoint'
+      lazyload />
+}
+```
+
+
+## API Methods
 
 ### `getPlayer()`
 
 Return a player instance, if it is created.
 
-## Advance Usages
+## Advanced Usages
 
 ### Controlling Players
 
