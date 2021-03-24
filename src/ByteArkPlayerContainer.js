@@ -3,14 +3,18 @@ import PlayerPlaceholder from './PlayerPlaceholder.js'
 import loadScriptOrStyle from './loadScriptOrStyle.js'
 import updatePlayerProps from './updatePlayerProps.js'
 
-function defaultCreatePlaceholderFunction(props, { error }) {
+function defaultCreatePlaceholderFunction(
+  props,
+  { error, loaded },
+  onClickPlaceholder
+) {
   return (
     <PlayerPlaceholder
+      onClick={onClickPlaceholder}
       className={props.className}
-      aspectRatio={props.aspectRatio}
       error={error}
-      fill={props.fill}
-      fluid={props.fluid}
+      loaded={loaded}
+      playerOptions={props}
     />
   )
 }
@@ -53,6 +57,7 @@ export class ByteArkPlayerContainer extends React.Component {
       ready: false,
       error: null
     }
+    this.onClickPlaceholder = this.onClickPlaceholder.bind(this)
   }
 
   player() {
@@ -132,7 +137,9 @@ export class ByteArkPlayerContainer extends React.Component {
   }
 
   componentDidMount() {
-    this.initializePlayer()
+    if (!this.props.lazyload) {
+      this.initializePlayer()
+    }
   }
 
   async initializePlayer() {
@@ -202,7 +209,8 @@ export class ByteArkPlayerContainer extends React.Component {
     }
 
     try {
-      const setupPlayerFunction = this.props.setupPlayerFunction || defaultSetupPlayerFunction
+      const setupPlayerFunction =
+        this.props.setupPlayerFunction || defaultSetupPlayerFunction
       await setupPlayerFunction(this.props, loadScriptOrStyle)
 
       this.onPlayerSetup()
@@ -231,12 +239,9 @@ export class ByteArkPlayerContainer extends React.Component {
       muted: autoplayResult_.muted
     }
 
-    const createPlayerFunction = this.props.createPlayerFunction || defaultCreatePlayerFunction
-    this.player = createPlayerFunction(
-      this.videoNode,
-      options,
-      this.onReady
-    )
+    const createPlayerFunction =
+      this.props.createPlayerFunction || defaultCreatePlayerFunction
+    this.player = createPlayerFunction(this.videoNode, options, this.onReady)
 
     this.onPlayerCreated()
   }
@@ -262,8 +267,13 @@ export class ByteArkPlayerContainer extends React.Component {
   }
 
   renderPlaceholder() {
-    const createPlaceholderFunction = this.props.createPlaceholderFunction || defaultCreatePlaceholderFunction
-    return createPlaceholderFunction(this.props, this.state)
+    const createPlaceholderFunction =
+      this.props.createPlaceholderFunction || defaultCreatePlaceholderFunction
+    return createPlaceholderFunction(
+      this.props,
+      this.state,
+      this.onClickPlaceholder
+    )
   }
 
   renderPlayer() {
@@ -317,9 +327,17 @@ export class ByteArkPlayerContainer extends React.Component {
     updatePlayerProps(this.player, this.props, nextProps)
   }
 
+  onClickPlaceholder() {
+    this.initializePlayer().then(() => {
+      this.player.play()
+    })
+  }
+
   canUserDOM() {
-    return typeof window !== 'undefined'
-      && window.document
-      && window.document.createElement
+    return (
+      typeof window !== 'undefined' &&
+      window.document &&
+      window.document.createElement
+    )
   }
 }
