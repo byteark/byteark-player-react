@@ -16,7 +16,7 @@ export default function PlayerPlaceholder(props) {
     position: 'absolute',
     width: '100%',
     minWidth: '100%',
-    background: `url(${options.poster})`,
+    backgroundImage: `url(${options.poster})`,
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     cursor: 'pointer'

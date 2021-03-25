@@ -48,6 +48,9 @@ const playerProps = [
     name: 'responsive'
   },
   {
+    name: 'seekButtons'
+  },
+  {
     name: 'sources',
     setter: 'src'
   },
@@ -56,11 +59,9 @@ const playerProps = [
   }
 ]
 
-export default function updatePlayerProps(player, currentProps, nextProps) {
+export default function updatePlayerProps(player, nextProps) {
   playerProps.forEach(({ name, setter }) => {
-    if (currentProps[name] !== nextProps[name]) {
-      const effectiveSetter = setter || name
-      player[effectiveSetter](nextProps[name])
-    }
+    const effectiveSetter = setter || name
+    player[effectiveSetter](nextProps[name])
   })
 }

@@ -318,11 +318,11 @@ export class ByteArkPlayerContainer extends React.Component {
     )
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (!this.player) {
-      return
+  componentDidUpdate(prevProps, prevState) {
+    // At this point, we're in the "commit" phase, so it's safe to load the new data.
+    if (this.player) {
+      updatePlayerProps(this.player, this.props)
     }
-    updatePlayerProps(this.player, this.props, nextProps)
   }
 
   onClickPlaceholder() {
