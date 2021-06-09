@@ -6,6 +6,7 @@ import updatePlayerProps from './updatePlayerProps.js'
 function defaultCreatePlaceholderFunction(props, state, onClickPlaceholder) {
   return (
     <PlayerPlaceholder
+      aspectRatio={props.aspectRatio}
       onClick={onClickPlaceholder}
       className={props.className}
       error={state.error}
@@ -257,7 +258,7 @@ export class ByteArkPlayerContainer extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{ position: 'relative' }}>
         {this.renderPlaceholder()}
         {this.state.error ? null : this.renderPlayer()}
       </div>
