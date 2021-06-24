@@ -52,7 +52,8 @@ export class ByteArkPlayerContainer extends React.Component {
       mounted: false,
       loaded: false,
       ready: false,
-      error: null
+      error: null,
+      showPlaceholder: true
     }
     this.onClickPlaceholder = this.onClickPlaceholder.bind(this)
   }
@@ -128,6 +129,10 @@ export class ByteArkPlayerContainer extends React.Component {
   }
 
   onReady = () => {
+    this.setState({
+      ready: true
+    })
+
     if (this.props.onReady) {
       this.props.onReady(this.player)
     }
@@ -258,9 +263,13 @@ export class ByteArkPlayerContainer extends React.Component {
 
   render() {
     return (
-      <div style={{ position: 'relative' }}>
-        {this.renderPlaceholder()}
-        {this.state.error ? null : this.renderPlayer()}
+      <div style={{ position: 'relative', height: '100%' }}>
+        {this.state.showPlaceholder ? this.renderPlaceholder() : null}
+        <div
+          style={{ display: this.state.showPlaceholder ? 'none' : 'initial' }}
+        >
+          {this.state.error ? null : this.renderPlayer()}
+        </div>
       </div>
     )
   }
@@ -328,6 +337,10 @@ export class ByteArkPlayerContainer extends React.Component {
 
   onClickPlaceholder() {
     this.initializePlayer().then(() => {
+      this.setState({
+        showPlaceholder: false
+      })
+
       this.player.play()
     })
   }

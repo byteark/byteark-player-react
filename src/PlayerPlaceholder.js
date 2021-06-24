@@ -13,7 +13,7 @@ export default function PlayerPlaceholder(props) {
   const options = props.playerOptions
 
   const placeholderCustomStyle = {
-    position: 'absolute',
+    position: 'relative',
     width: '100%',
     minWidth: '100%',
     backgroundImage: `url(${options.poster})`,
