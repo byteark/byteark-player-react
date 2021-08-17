@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "byteark-player-react": "file:..",
+    "byteark-player-react": "file:../",
     "react": "file:../node_modules/react",
     "react-dom": "file:../node_modules/react-dom",
     "react-live": "^2.2.3",

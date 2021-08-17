@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import PlayerPlaceholder from './PlayerPlaceholder.js'
 import loadScriptOrStyle from './loadScriptOrStyle.js'
 import updatePlayerProps from './updatePlayerProps.js'
 
-function defaultCreatePlaceholderFunction(props, state, onClickPlaceholder) {
+const defaultCreatePlaceholderFunction = (props, state, onClickPlaceholder) => {
   return (
     <PlayerPlaceholder
       aspectRatio={props.aspectRatio}
@@ -16,188 +16,171 @@ function defaultCreatePlaceholderFunction(props, state, onClickPlaceholder) {
   )
 }
 
-function defaultCreatePlayerFunction(videoNode, options, onReady) {
+const defaultCreatePlayerFunction = (videoNode, options, onReady) => {
   return bytearkPlayer.init(videoNode, options, onReady)
 }
 
-async function defaultSetupPlayerFunction(
+const defaultSetupPlayerFunction = async (
   options,
   loaderFunction,
   loadPluginOptions
-) {
+) => {
   await bytearkPlayer.setup(options, loaderFunction, loadPluginOptions)
 }
 
-export class ByteArkPlayerContainer extends React.Component {
-  static defaultProps = {
-    autoplay: true,
-    controls: true,
-    autoplayadsmuted: false,
-    createPlaceholderFunction: defaultCreatePlaceholderFunction,
-    createPlayerFunction: defaultCreatePlayerFunction,
-    setupPlayerFunction: defaultSetupPlayerFunction,
-    playerEndpoint: 'https://byteark-sdk.cdn.byteark.com/player-core/',
-    playerVersion: 'v2',
-    playerJsFileName: 'byteark-player.min.js',
-    playerCssFileName: 'byteark-player.min.css',
-    playsinline: true,
-    techCanOverridePoster: false
+const defaultProps = {
+  autoplay: true,
+  controls: true,
+  autoplayadsmuted: false,
+  createPlaceholderFunction: defaultCreatePlaceholderFunction,
+  createPlayerFunction: defaultCreatePlayerFunction,
+  setupPlayerFunction: defaultSetupPlayerFunction,
+  playerEndpoint: 'https://byteark-sdk.cdn.byteark.com/player-core/',
+  playerVersion: 'v2',
+  playerJsFileName: 'byteark-player.min.js',
+  playerCssFileName: 'byteark-player.min.css',
+  playsinline: true,
+  techCanOverridePoster: false
+}
+
+const ByteArkPlayerContainer = (props) => {
+  const [showPlaceholder, setShowPlaceholderState] = useState(true)
+  const [loaded, setLoadedState] = useState(false)
+  const [ready, setReadyState] = useState(false)
+  const [error, setErrorState] = useState(null)
+  let initializeInProgress = false
+  let player = null
+  let videoNode = null
+
+  const playerOptions = {
+    ...defaultProps,
+    ...props
   }
 
-  constructor(props) {
-    super(props)
+  // const player = () => {
+  //   return player;
+  // }
 
-    this.player = null
-    this.state = {
-      mounted: false,
-      loaded: false,
-      ready: false,
-      error: null,
-      showPlaceholder: true
-    }
-    this.onClickPlaceholder = this.onClickPlaceholder.bind(this)
-  }
+  // const loaded = () => {
+  //   return loaded
+  // }
 
-  player() {
-    return this.player
-  }
+  // const ready = () => {
+  //   return ready
+  // }
 
-  loaded() {
-    return this.state.loaded
-  }
+  // const error = () => {
+  //   return error
+  // }
 
-  ready() {
-    return this.state.ready
-  }
-
-  error() {
-    return this.state.error
-  }
-
-  onPlayerLoaded = () => {
-    if (this.props.onPlayerLoaded) {
+  const onPlayerLoaded = () => {
+    if (playerOptions.onPlayerLoaded) {
       try {
-        this.props.onPlayerLoaded()
+        playerOptions.onPlayerLoaded()
       } catch (err) {
         console.error(err)
       }
     }
   }
 
-  onPlayerLoadError = (error, originalError) => {
-    this.setState({
-      error
-    })
+  const onPlayerLoadError = (error, originalError) => {
+    setErrorState(error)
 
-    if (this.props.onPlayerLoadError) {
+    if (playerOptions.onPlayerLoadError) {
       try {
-        this.props.onPlayerLoadError(error, originalError)
+        playerOptions.onPlayerLoadError(error, originalError)
       } catch (err) {
         console.error(err)
       }
     }
   }
 
-  onPlayerSetup = () => {
-    this.setState({
-      loaded: true
-    })
+  const onPlayerSetup = () => {
+    setLoadedState(true)
 
-    if (this.props.onPlayerSetup) {
-      this.props.onPlayerSetup()
+    if (playerOptions.onPlayerSetup) {
+      playerOptions.onPlayerSetup()
     }
   }
 
-  onPlayerSetupError = (error, originalError) => {
-    this.setState({
-      error
-    })
+  const onPlayerSetupError = (error, originalError) => {
+    setErrorState(error)
 
-    if (this.props.onPlayerSetupError) {
+    if (playerOptions.onPlayerSetupError) {
       try {
-        this.props.onPlayerSetupError(error, originalError)
+        playerOptions.onPlayerSetupError(error, originalError)
       } catch (err) {
         console.error(err)
       }
     }
   }
 
-  onPlayerCreated = () => {
-    if (this.props.autoplay) {
-      this.setState({
-        showPlaceholder: false
-      })
+  const onPlayerCreated = () => {
+    if (playerOptions.autoplay) {
+      setShowPlaceholderState(false)
     }
 
-    if (this.props.onPlayerCreated) {
-      this.props.onPlayerCreated(this.player)
+    if (playerOptions.onPlayerCreated) {
+      playerOptions.onPlayerCreated(player)
     }
   }
 
-  onReady = () => {
-    this.setState({
-      ready: true
-    })
+  const onReady = () => {
+    setReadyState(true)
 
-    if (this.props.onReady) {
-      this.props.onReady(this.player)
+    if (playerOptions.onReady) {
+      playerOptions.onReady(player)
     }
   }
 
-  componentDidMount() {
-    if (!this.props.lazyload) {
-      this.initializePlayer()
-    }
-  }
-
-  async initializePlayer() {
+  const initializePlayer = async () => {
     // We'll not create a real player on server-side rendering.
-    const isClient = this.canUserDOM()
+    const isClient = canUserDOM()
     if (!isClient) {
       return
     }
 
     // Prevent double initialize
-    if (this.initializeInProgress) {
+    if (initializeInProgress) {
       return
     }
 
-    this.initializeInProgress = true
+    initializeInProgress = true
     try {
-      await this.loadPlayerResources()
-      await this.setupPlayer()
-      await this.createPlayerInstance()
-      this.initializeInProgress = false
+      await loadPlayerResources()
+      await setupPlayer()
+      await createPlayerInstance()
+      initializeInProgress = false
     } catch (err) {
-      this.initializeInProgress = false
+      initializeInProgress = false
       throw err
     }
   }
 
-  async loadPlayerResources() {
+  const loadPlayerResources = async () => {
     try {
       const promises = []
-      if (this.props.playerJsFileName) {
+      if (playerOptions.playerJsFileName) {
         promises.push(
           loadScriptOrStyle(
-            `byteark-player-script-${this.props.playerVersion}`,
-            `${this.props.playerEndpoint}/${this.props.playerVersion}/${this.props.playerJsFileName}`,
+            `byteark-player-script-${playerOptions.playerVersion}`,
+            `${playerOptions.playerEndpoint}/${playerOptions.playerVersion}/${playerOptions.playerJsFileName}`,
             'script'
           )
         )
       }
-      if (this.props.playerCssFileName) {
+      if (playerOptions.playerCssFileName) {
         promises.push(
           loadScriptOrStyle(
-            `byteark-player-style-${this.props.playerVersion}`,
-            `${this.props.playerEndpoint}/${this.props.playerVersion}/${this.props.playerCssFileName}`,
+            `byteark-player-style-${playerOptions.playerVersion}`,
+            `${playerOptions.playerEndpoint}/${playerOptions.playerVersion}/${playerOptions.playerCssFileName}`,
             'style'
           )
         )
       }
       await Promise.all(promises)
     } catch (originalError) {
-      this.onPlayerLoadError(
+      onPlayerLoadError(
         {
           code: 'ERROR_BYTEARK_PLAYER_REACT_100001',
           message: 'Sorry, something wrong when loading the video player.',
@@ -208,22 +191,22 @@ export class ByteArkPlayerContainer extends React.Component {
       // Rethrow to stop following statements.
       throw originalError
     }
-    this.onPlayerLoaded()
+    onPlayerLoaded()
   }
 
-  async setupPlayer() {
-    if (this.setupPlayerPromise) {
-      return this.setupPlayerPromise
-    }
+  const setupPlayer = async () => {
+    // if (this.setupPlayerPromise) {
+    //   return this.setupPlayerPromise
+    // }
 
     try {
       const setupPlayerFunction =
-        this.props.setupPlayerFunction || defaultSetupPlayerFunction
-      await setupPlayerFunction(this.props, loadScriptOrStyle)
+        playerOptions.setupPlayerFunction || defaultSetupPlayerFunction
+      await setupPlayerFunction(playerOptions, loadScriptOrStyle)
 
-      this.onPlayerSetup()
+      onPlayerSetup()
     } catch (originalError) {
-      this.onPlayerSetupError(
+      onPlayerSetupError(
         {
           code: 'ERROR_BYTEARK_PLAYER_REACT_100001',
           message: 'Sorry, something wrong when loading the video player.',
@@ -236,89 +219,86 @@ export class ByteArkPlayerContainer extends React.Component {
     }
   }
 
-  createPlayerInstance = async () => {
+  const createPlayerInstance = async () => {
     // check can autoplay video
-    const autoplayResult_ = await window.bytearkPlayer.canAutoplay(this.props)
+    const autoplayResult_ = await window.bytearkPlayer.canAutoplay(
+      playerOptions
+    )
 
     const options = {
-      ...this.props,
+      ...playerOptions,
       autoplayResult_,
       autoplay: autoplayResult_.autoplay,
       muted: autoplayResult_.muted
     }
 
     const createPlayerFunction =
-      this.props.createPlayerFunction || defaultCreatePlayerFunction
-    this.player = createPlayerFunction(this.videoNode, options, this.onReady)
+      playerOptions.createPlayerFunction || defaultCreatePlayerFunction
+    player = createPlayerFunction(videoNode, options, onReady)
 
-    this.onPlayerCreated()
+    onPlayerCreated()
   }
 
-  componentWillUnmount() {
-    if (this.player) {
-      this.player.dispose()
-      this.setState({
-        ready: false
-      })
-    }
-  }
-
-  onVideoNodeCreated = (node) => {
-    this.videoNode = node
-  }
-
-  render() {
-    return (
-      <div style={{ position: 'relative', height: '100%' }}>
-        {this.state.showPlaceholder ? this.renderPlaceholder() : null}
-        <div
-          style={{ display: this.state.showPlaceholder ? 'none' : 'initial' }}
-        >
-          {this.state.error ? null : this.renderPlayer()}
-        </div>
-      </div>
-    )
-  }
-
-  renderPlaceholder() {
+  const renderPlaceholder = () => {
     const createPlaceholderFunction =
-      this.props.createPlaceholderFunction || defaultCreatePlaceholderFunction
+      playerOptions.createPlaceholderFunction ||
+      defaultCreatePlaceholderFunction
     return createPlaceholderFunction(
-      this.props,
-      this.state,
-      this.onClickPlaceholder
+      playerOptions,
+      { loaded, error },
+      onClickPlaceholder
     )
   }
 
-  renderPlayer() {
+  const onClickPlaceholder = () => {
+    initializePlayer().then(() => {
+      setShowPlaceholderState(false)
+
+      player.play()
+    })
+  }
+
+  const canUserDOM = () => {
+    return (
+      typeof window !== 'undefined' &&
+      window.document &&
+      window.document.createElement
+    )
+  }
+
+  const onVideoNodeCreated = (node) => {
+    videoNode = node
+  }
+
+  const renderPlayer = () => {
     // Video element should be there since the start, but hidden.
     const videoStyle = {}
     let videoClasses = ''
 
-    if (this.props.className) {
-      videoClasses = this.props.className
+    if (playerOptions.className) {
+      videoClasses = playerOptions.className
     }
 
-    if (this.props.fill === 'fluid') {
-      if (this.props.aspectRatio === '4:3') {
+    if (playerOptions.fill === 'fluid') {
+      if (playerOptions.aspectRatio === '4:3') {
         videoClasses += ' vjs-4-3'
       }
 
-      if (this.props.aspectRatio === '16:9') {
+      if (playerOptions.aspectRatio === '16:9') {
         videoClasses += ' vjs-16-9'
       }
     }
 
-    if (!this.state.loaded) {
+    if (!loaded) {
       videoStyle.display = 'none'
     }
 
-    if (this.props.audioOnlyMode) {
+    if (playerOptions.audioOnlyMode) {
       return (
         <audio
           playsInline
-          ref={this.onVideoNodeCreated}
-          className={`video-js ${this.props.className}`}
+          ref={onVideoNodeCreated}
+          className={`video-js ${playerOptions.className}`}
           style={videoStyle}
         />
       )
@@ -327,35 +307,41 @@ export class ByteArkPlayerContainer extends React.Component {
     return (
       <video
         playsInline
-        ref={this.onVideoNodeCreated}
+        ref={onVideoNodeCreated}
         className={`video-js ${videoClasses}`}
         style={videoStyle}
       />
     )
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    // At this point, we're in the "commit" phase, so it's safe to load the new data.
-    if (this.player) {
-      updatePlayerProps(this.player, this.props)
+  useEffect(() => {
+    console.log('in')
+    if (!playerOptions.lazyload) {
+      initializePlayer()
     }
-  }
 
-  onClickPlaceholder() {
-    this.initializePlayer().then(() => {
-      this.setState({
-        showPlaceholder: false
-      })
+    return () => {
+      if (player) {
+        player.dispose()
+        setReadyState(false)
+      }
+    }
+  }, [])
 
-      this.player.play()
-    })
-  }
+  useEffect(() => {
+    if (player) {
+      updatePlayerProps(player, playerOptions)
+    }
+  })
 
-  canUserDOM() {
-    return (
-      typeof window !== 'undefined' &&
-      window.document &&
-      window.document.createElement
-    )
-  }
+  return (
+    <div style={{ position: 'relative', height: '100%' }}>
+      {showPlaceholder ? renderPlaceholder() : null}
+      <div style={{ display: showPlaceholder ? 'none' : 'initial' }}>
+        {error ? null : renderPlayer()}
+      </div>
+    </div>
+  )
 }
+
+export { ByteArkPlayerContainer }
