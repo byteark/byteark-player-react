@@ -43,15 +43,16 @@ const defaultProps = {
   techCanOverridePoster: false
 }
 
+let videoNode = null
+let player = null
+let initializeInProgress = false
+
 const ByteArkPlayerContainer = (props) => {
   const [showPlaceholder, setShowPlaceholderState] = useState(true)
   const [loaded, setLoadedState] = useState(false)
   // eslint-disable-next-line no-unused-vars
   const [ready, setReadyState] = useState(false)
   const [error, setErrorState] = useState(null)
-  const [videoNode, setVideoNode] = useState(null)
-  let player = null
-  let initializeInProgress = false
 
   const playerOptions = {
     ...defaultProps,
@@ -268,9 +269,7 @@ const ByteArkPlayerContainer = (props) => {
   }
 
   const onVideoNodeCreated = (node) => {
-    if (node) {
-      setVideoNode(node)
-    }
+    videoNode = node
   }
 
   const renderPlayer = () => {
@@ -328,7 +327,7 @@ const ByteArkPlayerContainer = (props) => {
         setReadyState(false)
       }
     }
-  }, [videoNode])
+  }, [])
 
   useEffect(() => {
     if (player) {
