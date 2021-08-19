@@ -46,11 +46,12 @@ const defaultProps = {
 const ByteArkPlayerContainer = (props) => {
   const [showPlaceholder, setShowPlaceholderState] = useState(true)
   const [loaded, setLoadedState] = useState(false)
+  // eslint-disable-next-line no-unused-vars
   const [ready, setReadyState] = useState(false)
   const [error, setErrorState] = useState(null)
-  let initializeInProgress = false
+  const [videoNode, setVideoNode] = useState(null)
   let player = null
-  let videoNode = null
+  let initializeInProgress = false
 
   const playerOptions = {
     ...defaultProps,
@@ -116,7 +117,7 @@ const ByteArkPlayerContainer = (props) => {
   }
 
   const onPlayerCreated = () => {
-    if (playerOptions.autoplay) {
+    if (playerOptions.autoplay || player) {
       setShowPlaceholderState(false)
     }
 
@@ -267,7 +268,9 @@ const ByteArkPlayerContainer = (props) => {
   }
 
   const onVideoNodeCreated = (node) => {
-    videoNode = node
+    if (node) {
+      setVideoNode(node)
+    }
   }
 
   const renderPlayer = () => {
@@ -315,8 +318,7 @@ const ByteArkPlayerContainer = (props) => {
   }
 
   useEffect(() => {
-    console.log('in')
-    if (!playerOptions.lazyload) {
+    if (!playerOptions.lazyload && videoNode) {
       initializePlayer()
     }
 
@@ -326,7 +328,7 @@ const ByteArkPlayerContainer = (props) => {
         setReadyState(false)
       }
     }
-  }, [])
+  }, [videoNode])
 
   useEffect(() => {
     if (player) {
