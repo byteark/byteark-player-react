@@ -1,4 +1,5 @@
 import React from 'react'
+import { isBrowserSupportDrm } from './drm.js'
 import PlayerPlaceholder from './PlayerPlaceholder.js'
 import loadScriptOrStyle from './loadScriptOrStyle.js'
 import updatePlayerProps from './updatePlayerProps.js'
@@ -246,6 +247,8 @@ export class ByteArkPlayerContainer extends React.Component {
       autoplay: autoplayResult_.autoplay,
       muted: autoplayResult_.muted
     }
+
+    window.bytearkPlayer.isBrowserSupportDrm = isBrowserSupportDrm
 
     const createPlayerFunction =
       this.props.createPlayerFunction || defaultCreatePlayerFunction
