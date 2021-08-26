@@ -1,8 +1,8 @@
 import React from 'react'
-import { isBrowserSupportDrm } from './drm.js'
-import PlayerPlaceholder from './PlayerPlaceholder.js'
-import loadScriptOrStyle from './loadScriptOrStyle.js'
-import updatePlayerProps from './updatePlayerProps.js'
+import { isBrowserSupportDrm } from './drm'
+import PlayerPlaceholder from './PlayerPlaceholder'
+import loadScriptOrStyle from './loadScriptOrStyle'
+import updatePlayerProps from './updatePlayerProps'
 
 function defaultCreatePlaceholderFunction(props, state, onClickPlaceholder) {
   return (

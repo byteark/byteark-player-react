@@ -1,5 +1,5 @@
 import React from 'react'
-import PlayerLoadErrorMessage from './PlayerLoadErrorMessage.js'
+import PlayerLoadErrorMessage from './PlayerLoadErrorMessage'
 
 function calculatePlaceholderPaddingTopFromAspectRatio(aspectRatio) {
   if (typeof aspectRatio === 'number') {

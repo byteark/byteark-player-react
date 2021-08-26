@@ -1,1 +1,2 @@
-export { ByteArkPlayerContainer } from './ByteArkPlayerContainer.js'
+export { ByteArkPlayerContainer } from './ByteArkPlayerContainer'
+export { isBrowserSupportDrm } from './drm'

@@ -17,7 +17,7 @@ function createScriptTag(id, src) {
     tag.src = src
 
     tag.addEventListener('load', () => {
-      tag.setAttribute('data-load-completed', (new Date()).getTime())
+      tag.setAttribute('data-load-completed', new Date().getTime())
       resolve()
     })
     tag.addEventListener('error', (err) => {
@@ -40,7 +40,7 @@ function createLinkStyleTag(id, src) {
     tag.setAttribute('type', 'text/css')
     tag.setAttribute('href', src)
     tag.addEventListener('load', () => {
-      tag.setAttribute('data-load-completed', (new Date()).getTime())
+      tag.setAttribute('data-load-completed', new Date().getTime())
       resolve()
     })
     tag.addEventListener('error', (err) => {
