@@ -40,12 +40,14 @@ const defaultProps = {
   playerJsFileName: 'byteark-player.min.js',
   playerCssFileName: 'byteark-player.min.css',
   playsinline: true,
-  techCanOverridePoster: false
+  techCanOverridePoster: false,
+  scriptLoadstrategy: 'afterInteractive'
 }
 
 let videoNode = null
 let player = null
 let initializeInProgress = false
+let initialized = false
 
 const ByteArkPlayerContainer = (props) => {
   const [showPlaceholder, setShowPlaceholderState] = useState(true)
@@ -153,6 +155,7 @@ const ByteArkPlayerContainer = (props) => {
       await setupPlayer()
       await createPlayerInstance()
       initializeInProgress = false
+      initialized = true
     } catch (err) {
       initializeInProgress = false
       throw err
@@ -162,15 +165,6 @@ const ByteArkPlayerContainer = (props) => {
   const loadPlayerResources = async () => {
     try {
       const promises = []
-      if (playerOptions.playerJsFileName) {
-        promises.push(
-          loadScriptOrStyle(
-            `byteark-player-script-${playerOptions.playerVersion}`,
-            `${playerOptions.playerEndpoint}/${playerOptions.playerVersion}/${playerOptions.playerJsFileName}`,
-            'script'
-          )
-        )
-      }
       if (playerOptions.playerCssFileName) {
         promises.push(
           loadScriptOrStyle(
@@ -316,11 +310,29 @@ const ByteArkPlayerContainer = (props) => {
     )
   }
 
-  useEffect(() => {
-    if (!playerOptions.lazyload && videoNode) {
-      initializePlayer()
-    }
+  const loadScript = async (playerOptions) => {
+    const loadScriptPromise = loadScriptOrStyle(
+      `byteark-player-script-${playerOptions.playerVersion}`,
+      `${playerOptions.playerEndpoint}/${playerOptions.playerVersion}/${playerOptions.playerJsFileName}`,
+      'script'
+    )
+    console.log('state: ', document.readyState)
+    loadScriptPromise
+      .then(() => {
+        if (
+          !playerOptions.lazyload &&
+          videoNode &&
+          !initialized &&
+          !initializeInProgress
+        ) {
+          console.log('state init: ', document.readyState)
+          initializePlayer()
+        }
+      })
+      .catch((error) => console.error(error))
+  }
 
+  useEffect(() => {
     return () => {
       if (player) {
         player.dispose()
@@ -330,10 +342,42 @@ const ByteArkPlayerContainer = (props) => {
   }, [])
 
   useEffect(() => {
-    if (player) {
+    if (player && ready) {
       updatePlayerProps(player, playerOptions)
     }
   })
+
+  // handle load script
+  useEffect(() => {
+    const isClient = canUserDOM()
+    if (!isClient) {
+      return
+    }
+    if (playerOptions.playerJsFileName) {
+      if (playerOptions.scriptLoadstrategy === 'afterInteractive') {
+        loadScript(playerOptions)
+      } else if (playerOptions.scriptLoadstrategy === 'lazyOnLoad') {
+        if (document.readyState === 'complete') {
+          window.requestIdleCallback(() => {
+            loadScript(playerOptions)
+          })
+        } else {
+          window.addEventListener('load', () => {
+            window.requestIdleCallback(() => {
+              loadScript(playerOptions)
+            })
+          })
+        }
+      }
+    }
+  }, [props, playerOptions.scriptLoadstrategy])
+
+  if (playerOptions.scriptLoadstrategy === 'beforeInteractive') {
+    const isClient = canUserDOM()
+    if (isClient) {
+      loadScript(playerOptions)
+    }
+  }
 
   return (
     <div style={{ position: 'relative', height: '100%' }}>

@@ -1,3 +1,6 @@
+const ScriptCache = new Map()
+const LoadCache = new Set()
+
 function tryResolveSrcType(src) {
   if (src.endsWith('.js')) {
     return 'script'
@@ -8,6 +11,20 @@ function tryResolveSrcType(src) {
 }
 
 function createScriptTag(id, src) {
+  const cacheKey = id || src
+
+  // check if script is already load
+  if (cacheKey && LoadCache.has(cacheKey)) {
+    return
+  }
+
+  // check if contents of this script are already loading/loaded
+  if (ScriptCache.has(src)) {
+    LoadCache.add(cacheKey)
+    // Execute onLoad since the script loading has begun
+    return
+  }
+
   return new Promise((resolve, reject) => {
     const body = document.getElementsByTagName('head')[0]
 
@@ -17,7 +34,7 @@ function createScriptTag(id, src) {
     tag.src = src
 
     tag.addEventListener('load', () => {
-      tag.setAttribute('data-load-completed', (new Date()).getTime())
+      tag.setAttribute('data-load-completed', new Date().getTime())
       resolve()
     })
     tag.addEventListener('error', (err) => {
@@ -40,7 +57,7 @@ function createLinkStyleTag(id, src) {
     tag.setAttribute('type', 'text/css')
     tag.setAttribute('href', src)
     tag.addEventListener('load', () => {
-      tag.setAttribute('data-load-completed', (new Date()).getTime())
+      tag.setAttribute('data-load-completed', new Date().getTime())
       resolve()
     })
     tag.addEventListener('error', (err) => {
