@@ -316,7 +316,6 @@ const ByteArkPlayerContainer = (props) => {
       `${playerOptions.playerEndpoint}/${playerOptions.playerVersion}/${playerOptions.playerJsFileName}`,
       'script'
     )
-    console.log('state: ', document.readyState)
     loadScriptPromise
       .then(() => {
         if (
@@ -325,7 +324,6 @@ const ByteArkPlayerContainer = (props) => {
           !initialized &&
           !initializeInProgress
         ) {
-          console.log('state init: ', document.readyState)
           initializePlayer()
         }
       })
