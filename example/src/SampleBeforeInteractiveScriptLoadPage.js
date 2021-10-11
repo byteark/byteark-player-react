@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { ByteArkPlayerContainer } from 'byteark-player-react'
 import Hero from './Hero.js'
+import SiteNav from './SiteNav.js'
 
-const SampleBlogPage = () => {
+const SampleBeforeInteractiveScriptLoadPage = () => {
   const options = {
     fluid: true,
     autoplay: false,
     aspectRatio: '16:9',
+    scriptLoadstrategy: 'beforeInteractive',
     poster: 'https://qoder.byteark.com/images/video-frames/1/GU/cg/1GUcgd3XwsmD-large.jpg',
     sources: {
       src: 'https://inox-bhm9yr.cdn.byteark.com/video-objects/RI2PimuHxDXw/playlist.m3u8',
@@ -16,6 +18,8 @@ const SampleBlogPage = () => {
   }
 
   return (
+    <Fragment>
+    <SiteNav/>
     <div className="container" style={{maxWidth: '800px'}}>
       <div className="row">
         <div className="col-12">
@@ -29,8 +33,7 @@ const SampleBlogPage = () => {
           <section className="mt-4 mb-4">
             <h2 className="h5">Examples</h2>
             <p>
-              The following is the most common example for videos that inline with your content.
-              This player is created with fluid layout mode, and setting aspect ratio to 16:9.
+              This player is created with fluid layout mode, before interactive script load, and setting aspect ratio to 16:9.
             </p>
             <div className="player-container mt-4 mb-4" style={{position: 'relative'}}>
               <ByteArkPlayerContainer { ...options } />
@@ -41,14 +44,14 @@ const SampleBlogPage = () => {
             <ul>
               <li><a href="#/fluid">Fluid Layout</a></li>
               <li><a href="#/fill">Fill Layout</a></li>
-              <li><a href="#/beforeInteractive">Before Interactive Script Load</a></li>
               <li><a href="#/lazyOnLoad">Lazy on load script load</a></li>
             </ul>
           </section>
         </div>
       </div>
     </div>
+    </Fragment>
   )
 }
 
-export default SampleBlogPage
+export default SampleBeforeInteractiveScriptLoadPage

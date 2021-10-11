@@ -372,7 +372,7 @@ const ByteArkPlayerContainer = (props) => {
 
   if (playerOptions.scriptLoadstrategy === 'beforeInteractive') {
     const isClient = canUserDOM()
-    if (isClient) {
+    if (isClient && !initializeInProgress && !initialized) {
       loadScript(playerOptions)
     }
   }

@@ -7,6 +7,8 @@ import {
 import SampleBlogPage from './SampleBlogPage.js'
 import SampleFluidPage from './SampleFluidPage.js'
 import SampleFillPage from './SampleFillPage.js'
+import SampleBeforeInteractiveScriptLoadPage from './SampleBeforeInteractiveScriptLoadPage.js'
+import SampleLazyOnLoadScriptLoadPage from './SampleLazyOnLoadScriptLoadPage.js';
 
 const App = () => {
   return (
@@ -17,6 +19,12 @@ const App = () => {
         </Route>
         <Route path="/fill">
           <SampleFillPage />
+        </Route>
+        <Route path="/beforeInteractive">
+          <SampleBeforeInteractiveScriptLoadPage />
+        </Route>
+        <Route path="/lazyOnLoad">
+          <SampleLazyOnLoadScriptLoadPage />
         </Route>
         <Route path="/">
           <SampleBlogPage />
