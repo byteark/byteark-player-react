@@ -124,11 +124,9 @@ export class ByteArkPlayerContainer extends React.Component {
   }
 
   onPlayerCreated = () => {
-    if (this.props.autoplay) {
-      this.setState({
-        showPlaceholder: false
-      })
-    }
+    this.setState({
+      showPlaceholder: false
+    })
 
     if (this.props.onPlayerCreated) {
       this.props.onPlayerCreated(this.player)
