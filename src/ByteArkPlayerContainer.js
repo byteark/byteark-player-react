@@ -37,7 +37,7 @@ export class ByteArkPlayerContainer extends React.Component {
     createPlaceholderFunction: defaultCreatePlaceholderFunction,
     createPlayerFunction: defaultCreatePlayerFunction,
     setupPlayerFunction: defaultSetupPlayerFunction,
-    playerEndpoint: 'https://byteark-sdk.cdn.byteark.com/player-core/',
+    playerEndpoint: 'https://byteark-sdk.cdn.byteark.com/player-core',
     playerVersion: 'v2',
     playerJsFileName: 'byteark-player.min.js',
     playerCssFileName: 'byteark-player.min.css',
