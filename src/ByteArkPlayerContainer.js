@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import PlayerPlaceholder from './PlayerPlaceholder.js'
 import loadScriptOrStyle from './loadScriptOrStyle.js'
 import updatePlayerProps from './updatePlayerProps.js'
+import usePrevious from './usePrevious.js'
 
 const defaultCreatePlaceholderFunction = (props, state, onClickPlaceholder) => {
   return (
@@ -60,6 +61,8 @@ const ByteArkPlayerContainer = (props) => {
     ...defaultProps,
     ...props
   }
+
+  const prevProps = usePrevious(playerOptions)
 
   // const player = () => {
   //   return player;
@@ -341,7 +344,7 @@ const ByteArkPlayerContainer = (props) => {
 
   useEffect(() => {
     if (player && ready) {
-      updatePlayerProps(player, playerOptions)
+      updatePlayerProps(player, playerOptions, prevProps)
     }
   })
 
