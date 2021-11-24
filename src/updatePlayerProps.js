@@ -1,3 +1,5 @@
+import isEqual from 'lodash.isequal'
+
 const playerProps = [
   {
     name: 'autoplay'
@@ -59,9 +61,11 @@ const playerProps = [
   }
 ]
 
-export default function updatePlayerProps(player, nextProps) {
+export default function updatePlayerProps(player, nextProps, prevProps) {
   playerProps.forEach(({ name, setter }) => {
     const effectiveSetter = setter || name
-    player[effectiveSetter](nextProps[name])
+    if (!isEqual(nextProps[name], prevProps[name])) {
+      player[effectiveSetter](nextProps[name])
+    }
   })
 }
