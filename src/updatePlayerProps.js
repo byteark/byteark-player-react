@@ -1,4 +1,4 @@
-import * as lodash from 'lodash'
+import isEqual from 'lodash.isequal'
 
 const playerProps = [
   {
@@ -64,7 +64,7 @@ const playerProps = [
 export default function updatePlayerProps(player, nextProps, prevProps) {
   playerProps.forEach(({ name, setter }) => {
     const effectiveSetter = setter || name
-    if (!lodash.isEqual(nextProps[name], prevProps[name])) {
+    if (!isEqual(nextProps[name], prevProps[name])) {
       player[effectiveSetter](nextProps[name])
     }
   })
