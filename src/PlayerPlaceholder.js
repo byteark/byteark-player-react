@@ -30,7 +30,7 @@ export default function PlayerPlaceholder(props) {
     left: '50%',
     marginTop: '-2.75em',
     marginLeft: '-2.75em',
-    background: 'rgba(0, 0, 0, 0.7)',
+    background: 'rgba(0, 0, 0, 0.85)',
     borderRadius: '50%'
   }
 
@@ -56,27 +56,30 @@ export default function PlayerPlaceholder(props) {
     placeholderCustomStyle.position = 'absolute'
   }
 
+  const shouldShowPlayIcon =
+    options.controls === undefined ||
+    options.controls === null ||
+    options.controls === true
+
   return (
     <div
       onClick={props.onClick}
       className={props.className}
       style={placeholderCustomStyle}
     >
-      {
-        options.controls === undefined || options.controls == true
-          ? <svg
-            className='play-icon'
-            width='90'
-            viewBox='0 0 60 60'
-            style={playIconStyle}
-          >
-              <path
-                style={pathStyle}
-                d='M47.43,27.26,14.11,5.87A3.34,3.34,0,0,0,9,8.79V51.56a3.34,3.34,0,0,0,5.11,2.91L47.43,33.09A3.49,3.49,0,0,0,47.43,27.26Z'
-              />
-            </svg>
-          : null
-      }
+      {shouldShowPlayIcon ? (
+        <svg
+          className='play-icon'
+          width='90'
+          viewBox='0 0 60 60'
+          style={playIconStyle}
+        >
+          <path
+            style={pathStyle}
+            d='M47.43,27.26,14.11,5.87A3.34,3.34,0,0,0,9,8.79V51.56a3.34,3.34,0,0,0,5.11,2.91L47.43,33.09A3.49,3.49,0,0,0,47.43,27.26Z'
+          />
+        </svg>
+      ) : null}
       {props.error ? <PlayerLoadErrorMessage {...props.error} /> : null}
     </div>
   )
