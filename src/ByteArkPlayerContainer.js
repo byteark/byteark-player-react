@@ -242,8 +242,6 @@ export class ByteArkPlayerContainer extends React.Component {
     const options = {
       ...this.props,
       autoplayResult_,
-      autoplay: autoplayResult_.autoplay,
-      muted: autoplayResult_.muted
     }
 
     window.bytearkPlayer.isBrowserSupportDrm = isBrowserSupportDrm
