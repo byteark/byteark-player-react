@@ -236,19 +236,15 @@ export class ByteArkPlayerContainer extends React.Component {
   }
 
   createPlayerInstance = async () => {
-    // check can autoplay video
-    const autoplayResult_ = await window.bytearkPlayer.canAutoplay(this.props)
-
-    const options = {
-      ...this.props,
-      autoplayResult_
-    }
-
     window.bytearkPlayer.isBrowserSupportDrm = isBrowserSupportDrm
 
     const createPlayerFunction =
       this.props.createPlayerFunction || defaultCreatePlayerFunction
-    this.player = createPlayerFunction(this.videoNode, options, this.onReady)
+    this.player = await createPlayerFunction(
+      this.videoNode,
+      this.props,
+      this.onReady
+    )
 
     this.onPlayerCreated()
   }
