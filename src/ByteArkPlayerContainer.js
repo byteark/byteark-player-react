@@ -18,7 +18,7 @@ function defaultCreatePlaceholderFunction(props, state, onClickPlaceholder) {
 }
 
 function defaultCreatePlayerFunction(videoNode, options, onReady) {
-  return bytearkPlayer.init(videoNode, options, onReady)
+  return bytearkPlayer.initAsync(videoNode, options, onReady)
 }
 
 async function defaultSetupPlayerFunction(
