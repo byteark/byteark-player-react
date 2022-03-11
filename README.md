@@ -2,18 +2,22 @@
 
 [![NPM](https://img.shields.io/npm/v/byteark-player-react.svg)](https://www.npmjs.com/package/byteark-player-react) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-* [Demo](#demo)
-* [Features](#features)
-* [Installation](#installation)
-* [Usage](#usage)
-* [Basic Props](#basic-props)
-    * [Source Object](#source-object)
-* [Callback Props](#callback-props)
-* [Advanced Props](#advanced-props)
-* [API Methods](#api-methods)
-* [Advanced Usages](#advanced-usages)
-    * [Controlling Players](#controlling-players)
-    * [Request Media/Encryption with credentials](#request-mediaencryption-with-credentials)
+- [ByteArk Player Container for React](#byteark-player-container-for-react)
+  - [Demo](#demo)
+  - [Features](#features)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Basic Props](#basic-props)
+    - [Source Object](#source-object)
+  - [Callback Props](#callback-props)
+  - [Advanced Props](#advanced-props)
+  - [API Methods](#api-methods)
+    - [`getPlayer()`](#getplayer)
+  - [Advanced Usages](#advanced-usages)
+    - [Controlling Players](#controlling-players)
+    - [Using VideoJS Plugins](#using-videojs-plugins)
+    - [Request Media/Encryption with credentials](#request-mediaencryption-with-credentials)
+  - [License](#license)
 
 ## Demo
 
@@ -215,7 +219,7 @@ const App = () => {
   }
 
   return <div>
-    <ByteArkPlayerContainer {...playerOptions} />
+    <ByteArkPlayerContainer {...playerOptions} onReady={onReady} />
     <button onClick={() => playerInstance.play()}>Play</button>
     <button onClick={() => playerInstance.pause()}>Pause</button>
   </div>
@@ -247,7 +251,7 @@ const App = () => {
     // The player is ready! Initialize plugins here.
   }
 
-  return <ByteArkPlayerContainer {...playerOptions} />
+  return <ByteArkPlayerContainer {...playerOptions} onReady={onReady} />
 }
 
 render(<App />, document.getElementById('root'))
@@ -283,7 +287,7 @@ const App = () => {
     // The player is ready! Initialize plugins here.
   }
 
-  return <ByteArkPlayerContainer {...playerOptions} />
+  return <ByteArkPlayerContainer {...playerOptions} onReady={onReady} />
 }
 
 
