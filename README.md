@@ -115,6 +115,7 @@ without re-creating the player instance. Additional properties will be passed to
 | muted                | Boolean        | -       | Play the video without sounds.                                               |
 | playerVersion        | String         | 1.0     | Version of the player to use.                                                |
 | playbackRate         | Number         | 1.0     | Playback speed. 1.0 means original speed.                                    |
+| playerSlugId         | String         | -       | SlugId of player created via api player server service                       |
 | playsinline          | Boolean        | true    | Should be true so custom controls available on all platforms, including iOS. |
 | poster               | String         | -       | Image to be show before the video is playing.                                |
 | preload              | String         | -       | Preload the video before play. (none|metadata|auto)                          |
