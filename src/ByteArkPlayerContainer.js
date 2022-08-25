@@ -41,6 +41,7 @@ export class ByteArkPlayerContainer extends React.Component {
     createPlayerFunction: defaultCreatePlayerFunction,
     setupPlayerFunction: defaultSetupPlayerFunction,
     playerEndpoint: 'https://byteark-sdk.cdn.byteark.com/player-core',
+    playerServerEndpoint: 'https://player.byteark.com/players',
     playerVersion: 'v2',
     playerJsFileName: 'byteark-player.min.js',
     playerCssFileName: 'byteark-player.min.css',
@@ -179,24 +180,49 @@ export class ByteArkPlayerContainer extends React.Component {
   async loadPlayerResources() {
     try {
       const promises = []
-      if (this.props.playerJsFileName) {
-        promises.push(
-          loadScriptOrStyle(
-            `byteark-player-script-${this.props.playerVersion}`,
-            `${this.props.playerEndpoint}/${this.props.playerVersion}/${this.props.playerJsFileName}`,
-            'script'
+      console.log(this.props.playerServerEndpoint)
+      if (this.props.playerSlugId) {
+        console.log('wtf')
+
+        if (this.props.playerJsFileName) {
+          promises.push(
+            loadScriptOrStyle(
+              `byteark-player-script-${this.props.playerSlugId}`,
+              `${this.props.playerServerEndpoint}/${this.props.playerSlugId}/libraries/${this.props.playerJsFileName}`,
+              'script'
+            )
           )
-        )
-      }
-      if (this.props.playerCssFileName) {
-        promises.push(
-          loadScriptOrStyle(
-            `byteark-player-style-${this.props.playerVersion}`,
-            `${this.props.playerEndpoint}/${this.props.playerVersion}/${this.props.playerCssFileName}`,
-            'style'
+        }
+        if (this.props.playerCssFileName) {
+          promises.push(
+            loadScriptOrStyle(
+              `byteark-player-style-${this.props.playerSlugId}`,
+              `${this.props.playerServerEndpoint}/${this.props.playerSlugId}/libraries/${this.props.playerCssFileName}`,
+              'style'
+            )
           )
-        )
+        }
+      } else {
+        if (this.props.playerJsFileName) {
+          promises.push(
+            loadScriptOrStyle(
+              `byteark-player-script-${this.props.playerVersion}`,
+              `${this.props.playerEndpoint}/${this.props.playerVersion}/${this.props.playerJsFileName}`,
+              'script'
+            )
+          )
+        }
+        if (this.props.playerCssFileName) {
+          promises.push(
+            loadScriptOrStyle(
+              `byteark-player-style-${this.props.playerVersion}`,
+              `${this.props.playerEndpoint}/${this.props.playerVersion}/${this.props.playerCssFileName}`,
+              'style'
+            )
+          )
+        }
       }
+
       await Promise.all(promises)
     } catch (originalError) {
       this.onPlayerLoadError(
