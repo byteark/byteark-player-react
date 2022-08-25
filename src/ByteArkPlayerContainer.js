@@ -180,10 +180,7 @@ export class ByteArkPlayerContainer extends React.Component {
   async loadPlayerResources() {
     try {
       const promises = []
-      console.log(this.props.playerServerEndpoint)
       if (this.props.playerSlugId) {
-        console.log('wtf')
-
         if (this.props.playerJsFileName) {
           promises.push(
             loadScriptOrStyle(
