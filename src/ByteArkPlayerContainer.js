@@ -293,7 +293,12 @@ export class ByteArkPlayerContainer extends React.Component {
       <div style={{ position: 'relative', height: '100%' }}>
         {this.state.showPlaceholder ? this.renderPlaceholder() : null}
         <div
-          style={{ display: this.state.showPlaceholder ? 'none' : 'initial' }}
+          style={{
+            display:
+              this.state.showPlaceholder || !this.state.loaded
+                ? 'none'
+                : 'initial'
+          }}
         >
           {this.state.error ? null : this.renderPlayer()}
         </div>
@@ -328,10 +333,6 @@ export class ByteArkPlayerContainer extends React.Component {
       if (this.props.aspectRatio === '16:9') {
         videoClasses += ' vjs-16-9'
       }
-    }
-
-    if (!this.state.loaded) {
-      videoStyle.display = 'none'
     }
 
     if (this.props.audioOnlyMode) {
