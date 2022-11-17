@@ -1,6 +1,6 @@
 {
   "name": "byteark-player-react",
-  "version": "2.0.0-beta1",
+  "version": "2.0.0-beta2",
   "description": "ByteArk Player Container for React",
   "author": "byteark",
   "license": "MIT",
@@ -24,7 +24,7 @@
     "deploy": "gh-pages -d example/build"
   },
   "peerDependencies": {
-    "react": "^17.0.2"
+    "react": "^18.2.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
