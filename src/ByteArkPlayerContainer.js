@@ -168,8 +168,9 @@ export class ByteArkPlayerContainer extends React.Component {
     this.initializeInProgress = true
     try {
       await this.loadPlayerResources()
-      await this.setupPlayer()
-      await this.createPlayerInstance()
+      const resultOptions = await this.setupOptions();
+      await this.setupPlayer(resultOptions)
+      await this.createPlayerInstance(resultOptions)
       this.initializeInProgress = false
     } catch (err) {
       this.initializeInProgress = false
@@ -236,7 +237,29 @@ export class ByteArkPlayerContainer extends React.Component {
     this.onPlayerLoaded()
   }
 
-  async setupPlayer() {
+  async setupOptions() {
+    try {
+      const autoplayResult = await window.bytearkPlayer.canAutoplay(this.props);
+      const resultPlayerOptions = {
+        ...this.props,
+        autoplayResult_: autoplayResult
+      };
+      return resultPlayerOptions;
+    } catch (originalError) {
+      this.onPlayerSetupError(
+        {
+          code: 'ERROR_BYTEARK_PLAYER_REACT_100001',
+          message: 'Sorry, something wrong when loading the video player.',
+          messageSecondary: 'Please refresh the page to try again.'
+        },
+        originalError
+      )
+      // Rethrow to stop following statements.
+      throw originalError
+    }
+  }
+
+  async setupPlayer(resultOptions) {
     if (this.setupPlayerPromise) {
       return this.setupPlayerPromise
     }
@@ -244,7 +267,7 @@ export class ByteArkPlayerContainer extends React.Component {
     try {
       const setupPlayerFunction =
         this.props.setupPlayerFunction || defaultSetupPlayerFunction
-      await setupPlayerFunction(this.props, loadScriptOrStyle)
+      await setupPlayerFunction(resultOptions, loadScriptOrStyle)
 
       this.onPlayerSetup()
     } catch (originalError) {
@@ -261,14 +284,14 @@ export class ByteArkPlayerContainer extends React.Component {
     }
   }
 
-  createPlayerInstance = async () => {
+  createPlayerInstance = async (resultOptions) => {
     window.bytearkPlayer.isBrowserSupportDrm = isBrowserSupportDrm
 
     const createPlayerFunction =
       this.props.createPlayerFunction || defaultCreatePlayerFunction
     this.player = await createPlayerFunction(
       this.videoNode,
-      this.props,
+      resultOptions,
       this.onReady
     )
 
