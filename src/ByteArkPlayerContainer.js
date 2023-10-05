@@ -168,7 +168,7 @@ export class ByteArkPlayerContainer extends React.Component {
     this.initializeInProgress = true
     try {
       await this.loadPlayerResources()
-      const resultOptions = await this.setupOptions();
+      const resultOptions = await this.setupOptions()
       await this.setupPlayer(resultOptions)
       await this.createPlayerInstance(resultOptions)
       this.initializeInProgress = false
@@ -239,12 +239,12 @@ export class ByteArkPlayerContainer extends React.Component {
 
   async setupOptions() {
     try {
-      const autoplayResult = await window.bytearkPlayer.canAutoplay(this.props);
+      const autoplayResult = await window.bytearkPlayer.canAutoplay(this.props)
       const resultPlayerOptions = {
         ...this.props,
         autoplayResult_: autoplayResult
-      };
-      return resultPlayerOptions;
+      }
+      return resultPlayerOptions
     } catch (originalError) {
       this.onPlayerSetupError(
         {
@@ -386,14 +386,14 @@ export class ByteArkPlayerContainer extends React.Component {
     }
   }
 
-  onClickPlaceholder() {
-    this.initializePlayer().then(() => {
-      this.setState({
-        showPlaceholder: false
-      })
+  async onClickPlaceholder() {
+    await this.initializePlayer()
 
-      this.player.play()
+    this.setState({
+      showPlaceholder: false
     })
+
+    this.player.play()
   }
 
   canUserDOM() {
