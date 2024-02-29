@@ -83,7 +83,7 @@ const App = () => {
   const playerOptions = {
     autoplay: true,
     fill: true,
-    poster: 'https://qoder.byteark.com/images/video-frames/1/GU/cg/1GUcgd3XwsmD-large.jpg'
+    poster: 'https://qoder.byteark.com/images/video-frames/1/GU/cg/1GUcgd3XwsmD-large.jpg',
     sources: {
       src: 'https://video.example.com/path/to/video/playlist.m3u8',
       type: 'application/x-mpegURL',
@@ -100,13 +100,12 @@ render(<App />, document.getElementById('root'))
 ```
 
 ## Basic Props
-
 Following properties are the properties that can be updated to the player,
 without re-creating the player instance. Additional properties will be passed to player.
 
 | Name                 | Type           | Default | Description                                                                  |
 |----------------------|----------------|---------|------------------------------------------------------------------------------|
-| autoplay             | Boolean        | true    | Autoplay the video after player is created.                                  |
+| autoplay             | Boolean/String | true    | Autoplay the video after player is created. (true/false/'muted'/'play'/'any')|
 | aspectRatio          | String         | -       | Use with fluid layout mode, to inform expected video's aspect ratio (16:9)   |
 | controls             | Boolean        | true    | Show/hide the controls bar.                                                  |
 | fill                 | Boolean        | -       | Use fill layout mode.                                                        |
@@ -118,7 +117,7 @@ without re-creating the player instance. Additional properties will be passed to
 | playbackRate         | Number         | 1.0     | Playback speed. 1.0 means original speed.                                    |
 | playsinline          | Boolean        | true    | Should be true so custom controls available on all platforms, including iOS. |
 | poster               | String         | -       | Image to be show before the video is playing.                                |
-| preload              | String         | -       | Preload the video before play. (none|metadata|auto)                          |
+| preload              | String         | -       | Preload the video before play. ('none'/'metadata'/'auto')                    |
 | responsive           | Boolean        | -       | Auto show/hide controls depending on the screen size.                        |
 | seekButtons          | Boolean        | false   | Show 10 seconds seek buttons and allow double-tap to seek on mobile.         |
 | sources              | Object/Array   | -       | Source of videos to be played.                                               |
@@ -137,7 +136,7 @@ The `sources` object has 2 required fields, and more optional field:
 | src     | String | URL to the video.                      |
 | type    | String | Video content type.                    |
 | title   | String | Video title to display on the player.  |
-| videoId | String | Video's ID, usaully used on Analytics. |
+| videoId | String | Video's ID, usually used on Analytics. |
 | poster  | String | Poster image URL for the video.        |
 
 To provide multiple version of sources, you can use array of source objects.
