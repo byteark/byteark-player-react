@@ -1,5 +1,13 @@
-export function isBrowserSupportDrm() {
-  const testKeySystems = [
+interface Config {
+  distinctiveIdentifier?: 'not-allowed' | 'optional' | 'required'
+  initDataTypes?: string[]
+  videoCapabilities?: { contentType: string }[]
+  persistentState?: 'not-allowed' | 'optional' | 'required'
+  sessionTypes?: string[]
+}
+
+export async function isBrowserSupportDrm() {
+  const testKeySystems: string[] = [
     'com.widevine.alpha',
     'com.apple.fps.3_0',
     'com.apple.fps.2_0',
@@ -12,22 +20,22 @@ export function isBrowserSupportDrm() {
     { contentType: 'video/webm; codecs="vp8"' }
   ]
 
-  const basicConfig = {
+  const basicConfig: Config = {
     initDataTypes: ['cenc'],
     videoCapabilities: basicVideoCapabilities
   }
 
-  const offlineConfig = {
+  const offlineConfig: Config = {
     videoCapabilities: basicVideoCapabilities,
     persistentState: 'required',
     sessionTypes: ['persistent-license']
   }
 
-  const configs = [offlineConfig, basicConfig]
+  const configs: Config[] = [offlineConfig, basicConfig]
 
-  const support = {}
+  const support: Record<string, boolean> = {}
 
-  const testSystem = (keySystem) =>
+  const testSystem = (keySystem: string) =>
     navigator
       .requestMediaKeySystemAccess(keySystem, configs)
       .then(() => {

@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { CSSProperties } from 'react'
+import type { LoadErrorMessageProps } from '../types'
 
-export default function ErrorMessage(props) {
-  const containerStyle = {
+export default function ErrorMessage(props: LoadErrorMessageProps) {
+  const containerStyle: CSSProperties = {
     position: 'absolute',
     top: 0,
     bottom: 0,

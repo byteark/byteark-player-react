@@ -1,18 +1,24 @@
-import React from 'react'
+import React, { CSSProperties } from 'react'
 import PlayerLoadErrorMessage from './PlayerLoadErrorMessage'
+import type { PlayerPlaceholderProps } from '../types'
 
-function calculatePlaceholderPaddingTopFromAspectRatio(aspectRatio) {
+function getPlaceholderPaddingTopFromAspectRatio(aspectRatio: unknown): number {
   if (typeof aspectRatio === 'number') {
     return aspectRatio
   }
+
+  if (typeof aspectRatio !== 'string') {
+    return 0
+  }
+
   const [hStr, vStr] = aspectRatio.split(':')
   return (Number.parseFloat(vStr) / Number.parseFloat(hStr)) * 100
 }
 
-export default function PlayerPlaceholder(props) {
+export default function PlayerPlaceholder(props: PlayerPlaceholderProps) {
   const options = props.playerOptions
 
-  const placeholderCustomStyle = {
+  const placeholderCustomStyle: CSSProperties = {
     position: 'relative',
     width: '100%',
     minWidth: '100%',
@@ -23,7 +29,7 @@ export default function PlayerPlaceholder(props) {
     cursor: 'pointer'
   }
 
-  const playIconStyle = {
+  const playIconStyle: CSSProperties = {
     position: 'absolute',
     width: '90px',
     top: '50%',
@@ -34,13 +40,13 @@ export default function PlayerPlaceholder(props) {
     borderRadius: '50%'
   }
 
-  const pathStyle = {
+  const pathStyle: CSSProperties = {
     fill: '#FFF',
     transform: 'translateX(13px) translateY(9px) scale(0.7)'
   }
 
   if (options.fluid) {
-    placeholderCustomStyle.paddingTop = `${calculatePlaceholderPaddingTopFromAspectRatio(
+    placeholderCustomStyle.paddingTop = `${getPlaceholderPaddingTopFromAspectRatio(
       props.aspectRatio || '16:9'
     )}%`
   }
@@ -67,19 +73,21 @@ export default function PlayerPlaceholder(props) {
       className={props.className}
       style={placeholderCustomStyle}
     >
-      {shouldShowPlayIcon ? (
-        <svg
-          className='play-icon'
-          width='90'
-          viewBox='0 0 60 60'
-          style={playIconStyle}
-        >
-          <path
-            style={pathStyle}
-            d='M47.43,27.26,14.11,5.87A3.34,3.34,0,0,0,9,8.79V51.56a3.34,3.34,0,0,0,5.11,2.91L47.43,33.09A3.49,3.49,0,0,0,47.43,27.26Z'
-          />
-        </svg>
-      ) : null}
+      {shouldShowPlayIcon
+        ? (
+          <svg
+            className='play-icon'
+            width='90'
+            viewBox='0 0 60 60'
+            style={playIconStyle}
+          >
+            <path
+              style={pathStyle}
+              d='M47.43,27.26,14.11,5.87A3.34,3.34,0,0,0,9,8.79V51.56a3.34,3.34,0,0,0,5.11,2.91L47.43,33.09A3.49,3.49,0,0,0,47.43,27.26Z'
+            />
+          </svg>
+        )
+        : null}
       {props.error ? <PlayerLoadErrorMessage {...props.error} /> : null}
     </div>
   )
