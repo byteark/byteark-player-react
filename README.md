@@ -55,7 +55,7 @@ const App = () => {
     autoplay: true,
     fluid: true,
     aspectRatio: '16:9',
-    poster: 'https://qoder.byteark.com/images/video-frames/1/GU/cg/1GUcgd3XwsmD-large.jpg'
+    poster: 'https://qoder.byteark.com/images/video-frames/1/GU/cg/1GUcgd3XwsmD-large.jpg',
     sources: {
       src: 'https://video.example.com/path/to/video/playlist.m3u8',
       type: 'application/x-mpegURL',
