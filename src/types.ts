@@ -2,12 +2,14 @@
 import type { ReactNode } from 'react'
 import videojs from 'video.js'
 
+export interface AutoplayResult {
+  autoplay: boolean;
+  muted: boolean;
+}
+
 export interface ByteArkPlayer extends videojs.Player {
-  autoplayResult_: {
-    autoplay: boolean;
-    muted: boolean;
-  };
-  canAutoplay(props: ByteArkPlayerOptions): Promise<boolean>;
+  autoplayResult_: AutoplayResult;
+  canAutoplay(props: ByteArkPlayerOptions): Promise<AutoplayResult>;
   init: DefaultCreatePlayerFunction;
   initAsync: DefaultCreatePlayerFunction;
   isBrowserSupportDrm(): Promise<{widevine: boolean; fairplay: boolean;}>;
@@ -57,7 +59,7 @@ export interface ByteArkPlayerOptions extends videojs.PlayerOptions {
   techCanOverridePoster?: boolean;
 }
 
-export type ByteArkPlayerWithAutoplayResult = ByteArkPlayerOptions & {autoplayResult_: Readonly<boolean>};
+export type ByteArkPlayerWithAutoplayResult = ByteArkPlayerOptions & {autoplayResult_: AutoplayResult};
 
 export interface LoadErrorMessageProps {
   message?: string;
