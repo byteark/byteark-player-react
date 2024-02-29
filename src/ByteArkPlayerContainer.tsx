@@ -11,7 +11,7 @@ import {
   DefaultSetupPlayerFunction,
   LoadErrorMessageProps
 } from './types'
-import updatePlayerProps from './updatePlayerProps'
+// import updatePlayerProps from './updatePlayerProps'
 
 declare global {
   // eslint-disable-next-line no-unused-vars
@@ -380,11 +380,11 @@ export function ByteArkPlayerContainer(props: ByteArkPlayerOptions) {
     }
   }, [])
 
-  useEffect(() => {
-    if (player) {
-      updatePlayerProps(player, props)
-    }
-  }, [player, props])
+  // useEffect(() => {
+  //   if (player) {
+  //     updatePlayerProps(player, props)
+  //   }
+  // }, [player, props])
 
   return (
     <div style={{ position: 'relative', height: '100%' }}>
