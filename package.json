@@ -1,6 +1,6 @@
 {
   "name": "byteark-player-react",
-  "version": "2.1.0-rc.1",
+  "version": "2.1.0-rc.2",
   "description": "ByteArk Player Container for React",
   "author": "byteark",
   "license": "MIT",
@@ -13,7 +13,7 @@
     "node": ">=16"
   },
   "scripts": {
-    "build": "microbundle --no-compress --format modern,cjs --jsx React.createElement",
+    "build": "microbundle --no-compress --format modern,cjs --jsx React.createElement && cp ./types.d.ts dist/",
     "start": "microbundle watch --no-compress --format modern,cjs --jsx React.createElement",
     "prepublish": "run-s build",
     "test": "run-s test:unit test:lint test:build",
