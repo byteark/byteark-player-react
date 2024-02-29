@@ -1,14 +1,17 @@
 {
-  "parser": "babel-eslint",
+  "parser": "@typescript-eslint/parser",
   "extends": [
     "standard",
-    "standard-react",
-    "plugin:prettier/recommended",
-    "prettier/standard",
-    "prettier/react"
+    "standard-react"
+  ],
+  "plugins": [
+    "react",
+    "prettier"
   ],
   "env": {
-    "node": true
+    "node": true,
+    "browser": true,
+    "jest": true
   },
   "parserOptions": {
     "ecmaVersion": 2020,
@@ -19,7 +22,7 @@
   },
   "settings": {
     "react": {
-      "version": "17"
+      "version": "18"
     }
   },
   "rules": {
