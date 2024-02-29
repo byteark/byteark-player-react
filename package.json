@@ -1,13 +1,13 @@
 {
   "name": "byteark-player-react",
-  "version": "2.1.0-beta.1",
+  "version": "2.1.0-rc.1",
   "description": "ByteArk Player Container for React",
   "author": "byteark",
   "license": "MIT",
   "repository": "byteark/byteark-player-react",
   "main": "dist/index.js",
   "module": "dist/index.modern.mjs",
-  "types": "types.d.ts",
+  "types": "dist/types.d.ts",
   "source": "src/index.ts",
   "engines": {
     "node": ">=16"
