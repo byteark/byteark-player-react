@@ -84,15 +84,18 @@ const App = () => {
     autoplay: true,
     fill: true,
     poster: 'https://qoder.byteark.com/images/video-frames/1/GU/cg/1GUcgd3XwsmD-large.jpg',
-    sources: {
-      src: 'https://video.example.com/path/to/video/playlist.m3u8',
-      type: 'application/x-mpegURL',
-      // Optional
-      title: 'Video Title',
-      videoId: 'RI2PimuHxDXw',
-      poster: 'https://qoder.byteark.com/images/video-frames/1/GU/cg/1GUcgd3XwsmD-large.jpg'
-    }
+    sources: [
+      {
+        src: 'https://video.example.com/path/to/video/playlist.m3u8',
+        type: 'application/x-mpegURL',
+        // Optional
+        title: 'Video Title',
+        videoId: 'RI2PimuHxDXw',
+        poster: 'https://qoder.byteark.com/images/video-frames/1/GU/cg/1GUcgd3XwsmD-large.jpg'
+      }
+    ]
   }
+
   return <ByteArkPlayerContainer {...playerOptions} />
 }
 
@@ -120,7 +123,7 @@ without re-creating the player instance. Additional properties will be passed to
 | preload              | String         | -       | Preload the video before play. ('none'/'metadata'/'auto')                    |
 | responsive           | Boolean        | -       | Auto show/hide controls depending on the screen size.                        |
 | seekButtons          | Boolean        | false   | Show 10 seconds seek buttons and allow double-tap to seek on mobile.         |
-| sources              | Object/Array   | -       | Source of videos to be played.                                               |
+| sources              | Array          | -       | Source of videos to be played.                                               |
 | volume               | Number         | -       | Video's volume, between 0 to 1.                                              |
 
 You can also use other props not listed here,
@@ -205,12 +208,14 @@ const App = () => {
   const playerOptions = {
     autoplay: true,
     fluid: true,
-    sources: {
-      src: 'https://video.example.com/path/to/video/playlist.m3u8',
-      type: 'application/x-mpegURL',
-      // Optional
-      title: 'Video Title'
-    }
+    sources: [
+      {
+        src: 'https://video.example.com/path/to/video/playlist.m3u8',
+        type: 'application/x-mpegURL',
+        // Optional
+        title: 'Video Title'
+      }
+    ]
   }
 
   let playerInstance = null
@@ -239,12 +244,14 @@ const App = () => {
   const playerOptions = {
     autoplay: true,
     fluid: true,
-    sources: {
-      src: 'https://video.example.com/path/to/video/playlist.m3u8',
-      type: 'application/x-mpegURL',
-      // Optional
-      title: 'Video Title'
-    }
+    sources: [
+      {
+        src: 'https://video.example.com/path/to/video/playlist.m3u8',
+        type: 'application/x-mpegURL',
+        // Optional
+        title: 'Video Title'
+      }
+    ]
   }
 
   const onReady = (newPlayerInstance) => {
@@ -268,12 +275,14 @@ const App = () => {
   const playerOptions = {
     autoplay: true,
     fluid: true,
-    sources: {
-      src: 'https://video.example.com/path/to/video/playlist.m3u8',
-      type: 'application/x-mpegURL',
-      // Optional
-      title: 'Video Title'
-    },
+    sources: [
+      {
+        src: 'https://video.example.com/path/to/video/playlist.m3u8',
+        type: 'application/x-mpegURL',
+        // Optional
+        title: 'Video Title'
+      }
+    ],
     html5: {
       hlsjs: {
         xhrSetup: function(xhr, url) {
@@ -289,7 +298,7 @@ const App = () => {
 
   return <ByteArkPlayerContainer {...playerOptions} onReady={onReady} />
 }
-
+```
 
 
 ## License
