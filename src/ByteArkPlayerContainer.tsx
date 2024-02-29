@@ -268,13 +268,13 @@ export function ByteArkPlayerContainer(props: ByteArkPlayerOptions) {
   }
 
   const createPlayerInstance = async (resultOptions: ByteArkPlayerWithAutoplayResult) => {
-    if (!videoRef.current || !audioRef.current) {
+    if (videoRef.current === null && audioRef.current === null) {
       return
     }
 
     window.bytearkPlayer.isBrowserSupportDrm = isBrowserSupportDrm
     const createdPlayer = await createPlayerFunction(
-      videoRef.current ?? audioRef.current,
+      (videoRef.current ?? audioRef.current)!,
       resultOptions,
       onReady
     )
