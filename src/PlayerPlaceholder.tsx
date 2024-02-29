@@ -1,7 +1,6 @@
 import React, { CSSProperties } from 'react'
+import { PlayerPlaceholderProps } from '../types'
 import PlayerLoadErrorMessage from './PlayerLoadErrorMessage'
-
-import { PlayerPlaceholderProps } from './types'
 
 function getPlaceholderPaddingTopFromAspectRatio(aspectRatio: unknown): number {
   if (typeof aspectRatio === 'number') {

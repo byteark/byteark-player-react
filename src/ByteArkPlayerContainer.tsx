@@ -1,7 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { isBrowserSupportDrm } from './drm'
-import PlayerPlaceholder from './PlayerPlaceholder'
-import loadScriptOrStyle from './loadScriptOrStyle'
 import {
   ByteArkPlayer,
   ByteArkPlayerOptions,
@@ -10,7 +7,10 @@ import {
   DefaultCreatePlayerFunction,
   DefaultSetupPlayerFunction,
   LoadErrorMessageProps
-} from './types'
+} from '../types'
+import { isBrowserSupportDrm } from './drm'
+import PlayerPlaceholder from './PlayerPlaceholder'
+import loadScriptOrStyle from './loadScriptOrStyle'
 // import updatePlayerProps from './updatePlayerProps'
 
 declare global {
