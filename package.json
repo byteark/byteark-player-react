@@ -1,19 +1,19 @@
 {
   "name": "byteark-player-react",
-  "version": "2.1.0-rc.2",
+  "version": "2.1.0-rc.3",
   "description": "ByteArk Player Container for React",
   "author": "byteark",
   "license": "MIT",
   "repository": "byteark/byteark-player-react",
   "main": "dist/index.js",
   "module": "dist/index.modern.mjs",
-  "types": "dist/types.d.ts",
+  "types": "types.d.ts",
   "source": "src/index.ts",
   "engines": {
     "node": ">=16"
   },
   "scripts": {
-    "build": "microbundle --no-compress --format modern,cjs --jsx React.createElement && cp ./types.d.ts dist/",
+    "build": "microbundle --no-compress --format modern,cjs --jsx React.createElement",
     "start": "microbundle watch --no-compress --format modern,cjs --jsx React.createElement",
     "prepublish": "run-s build",
     "test": "run-s test:unit test:lint test:build",
@@ -58,6 +58,7 @@
     "vite-tsconfig-paths": "^4.3.1"
   },
   "files": [
-    "dist"
+    "dist",
+    "types.d.ts"
   ]
 }
