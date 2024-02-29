@@ -1,4 +1,4 @@
-import { ByteArkPlayer, ByteArkPlayerOptions } from '../types'
+import type { ByteArkPlayer, ByteArkPlayerOptions } from './types'
 
 type PlayerPropName = 'autoplay' | 'aspectRatio' | 'breakpoints' | 'controls' | 'fill' | 'fluid' | 'loop' | 'language' | 'muted'
   | 'playsinline' | 'poster' | 'preload' | 'responsive' | 'seekButtons' | 'sources' | 'src'

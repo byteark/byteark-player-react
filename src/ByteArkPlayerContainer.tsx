@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { isBrowserSupportDrm } from './drm'
 import PlayerPlaceholder from './PlayerPlaceholder'
 import loadScriptOrStyle from './loadScriptOrStyle'
-import type {
+import {
   ByteArkPlayer,
   ByteArkPlayerOptions,
   ByteArkPlayerWithAutoplayResult,
@@ -10,8 +10,15 @@ import type {
   DefaultCreatePlayerFunction,
   DefaultSetupPlayerFunction,
   LoadErrorMessageProps
-} from '../types'
+} from './types'
 import updatePlayerProps from './updatePlayerProps'
+
+declare global {
+  // eslint-disable-next-line no-unused-vars
+  interface Window { bytearkPlayer: ByteArkPlayer; }
+}
+
+window.bytearkPlayer = window.bytearkPlayer || {}
 
 const defaultCreatePlaceholderFunction: DefaultCreatePlaceholderFunction = (props, state, onClickPlaceholder) => {
   return (

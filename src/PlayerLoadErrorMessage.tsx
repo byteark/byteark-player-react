@@ -1,5 +1,6 @@
 import React, { CSSProperties } from 'react'
-import type { LoadErrorMessageProps } from '../types'
+
+import { LoadErrorMessageProps } from './types'
 
 export default function ErrorMessage(props: LoadErrorMessageProps) {
   const containerStyle: CSSProperties = {

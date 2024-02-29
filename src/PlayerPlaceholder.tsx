@@ -1,6 +1,7 @@
 import React, { CSSProperties } from 'react'
 import PlayerLoadErrorMessage from './PlayerLoadErrorMessage'
-import type { PlayerPlaceholderProps } from '../types'
+
+import { PlayerPlaceholderProps } from './types'
 
 function getPlaceholderPaddingTopFromAspectRatio(aspectRatio: unknown): number {
   if (typeof aspectRatio === 'number') {
@@ -86,7 +87,7 @@ export default function PlayerPlaceholder(props: PlayerPlaceholderProps) {
               d='M47.43,27.26,14.11,5.87A3.34,3.34,0,0,0,9,8.79V51.56a3.34,3.34,0,0,0,5.11,2.91L47.43,33.09A3.49,3.49,0,0,0,47.43,27.26Z'
             />
           </svg>
-        )
+          )
         : null}
       {props.error ? <PlayerLoadErrorMessage {...props.error} /> : null}
     </div>
