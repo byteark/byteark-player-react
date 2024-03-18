@@ -1,64 +1,77 @@
 {
   "name": "byteark-player-react",
+  "private": true,
   "version": "2.1.0",
   "description": "ByteArk Player Container for React",
   "author": "byteark",
   "license": "MIT",
-  "repository": "byteark/byteark-player-react",
-  "main": "dist/index.js",
-  "module": "dist/index.modern.mjs",
-  "types": "types.d.ts",
-  "source": "src/index.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/byteark/byteark-player-react"
+  },
+  "bugs": {
+    "url": "https://github.com/byteark/byteark-player-react/issues"
+  },
+  "main": "./dist/byteark-player-react.umd.cjs",
+  "module": "./dist/byteark-player-react.js",
+  "types": "./dist/byteark-player-react.d.ts",
+  "source": "./src/index.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/byteark-player-react.js",
+      "require": "./dist/byteark-player-react.umd.cjs",
+      "types": "./dist/byteark-player-react.d.ts"
+    }
+  },
   "engines": {
     "node": ">=16"
   },
+  "type": "module",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "microbundle --no-compress --format modern,cjs --jsx React.createElement",
-    "start": "microbundle watch --no-compress --format modern,cjs --jsx React.createElement",
+    "start": "npm run dev",
+    "clean": "rimraf ./dist",
+    "dev": "vite",
+    "build": "tsc --p ./tsconfig.build.json && vite build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "prepublish": "run-s build",
-    "test": "run-s test:unit test:lint test:build",
-    "test:build": "run-s build",
-    "test:lint": "eslint .",
-    "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
-    "test:watch": "vite test --env=jsdom",
-    "predeploy": "cd example && npm install && npm run build",
-    "deploy": "gh-pages -d example/build"
+    "predeploy": "tsc --p ./tsconfig.build.example.json && vite build --config ./vite.config.example.ts --outDir dist/example",
+    "deploy": "gh-pages -d dist/example"
   },
   "peerDependencies": {
-    "react": "^18.2.0"
+    "@types/video.js": "^7.3.57",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/react": "^18.2.59",
-    "@types/react-dom": "^18.2.19",
-    "@types/video.js": "^7.3.56",
-    "@typescript-eslint/parser": "^5.62.0",
+    "@types/lodash.isequal": "^4.5.8",
+    "@types/node": "^20.11.26",
+    "@types/react": "^18.2.64",
+    "@types/react-dom": "^18.2.21",
+    "@types/video.js": "^7.3.57",
+    "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "@typescript-eslint/parser": "^7.1.1",
     "@vitejs/plugin-react": "^4.2.1",
-    "cross-env": "^7.0.3",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-config-standard": "^17.1.0",
-    "eslint-config-standard-react": "^13.0.0",
-    "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^5.1.3",
-    "eslint-plugin-promise": "^6.1.1",
-    "eslint-plugin-react": "^7.33.2",
-    "eslint-plugin-standard": "^5.0.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
     "gh-pages": "^6.1.1",
-    "microbundle": "^0.15.1",
     "npm-run-all": "^4.1.5",
-    "postcss-flexbugs-fixes": "^5.0.2",
-    "postcss-loader": "^8.1.0",
-    "postcss-normalize": "^10.0.1",
     "prettier": "^3.2.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "typescript": "^5.3.3",
-    "vite": "^5.1.4",
-    "vite-tsconfig-paths": "^4.3.1"
+    "react-router-dom": "^6.22.3",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.2.2",
+    "vite": "^5.1.6",
+    "vite-plugin-dts": "^3.7.3"
   },
-  "files": [
-    "dist",
-    "types.d.ts"
-  ]
+  "dependencies": {
+    "lodash.isequal": "^4.5.0",
+    "react-use": "^17.5.0"
+  }
 }
