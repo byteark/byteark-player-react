@@ -185,4 +185,4 @@ Error generating stack: `+i.message+`
 
   return <ByteArkPlayerContainer {...options} />
 }
-`})})]})})]})]})};function Yv(){return g.jsxs(Xy,{children:[g.jsx(Pt,{path:"/fluid",element:g.jsx(Vv,{})}),g.jsx(Pt,{path:"/fill",element:g.jsx(Bv,{})}),g.jsx(Pt,{path:"/full",element:g.jsx(Wv,{})}),g.jsx(Pt,{path:"/autoplay",element:g.jsx(Hv,{})}),g.jsx(Pt,{path:"/ads",element:g.jsx(Qv,{})}),g.jsx(Pt,{path:"/lazyload",element:g.jsx(Kv,{})}),g.jsx(Pt,{path:"/",index:!0,element:g.jsx($v,{})})]})}ho.createRoot(document.getElementById("root")).render(g.jsx(pn.StrictMode,{children:g.jsx(nv,{children:g.jsx(Yv,{})})}));
+`})})]})})]})]})};function Yv(){return g.jsxs(Xy,{children:[g.jsx(Pt,{path:"/fluid",element:g.jsx(Vv,{})}),g.jsx(Pt,{path:"/fill",element:g.jsx(Bv,{})}),g.jsx(Pt,{path:"/full",element:g.jsx(Wv,{})}),g.jsx(Pt,{path:"/autoplay",element:g.jsx(Hv,{})}),g.jsx(Pt,{path:"/ads",element:g.jsx(Qv,{})}),g.jsx(Pt,{path:"/lazyload",element:g.jsx(Kv,{})}),g.jsx(Pt,{path:"/",index:!0,element:g.jsx($v,{})})]})}ho.createRoot(document.getElementById("root")).render(g.jsx(pn.StrictMode,{children:g.jsx(nv,{basename:"/byteark-player-react/",children:g.jsx(Yv,{})})}));
