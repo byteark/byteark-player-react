@@ -15,6 +15,7 @@
     - [Controlling Players](#controlling-players)
     - [Using VideoJS Plugins](#using-videojs-plugins)
     - [Request Media/Encryption with credentials](#request-mediaencryption-with-credentials)
+    - [Use with Next.js](#use-with-nextjs)
   - [License](#license)
 
 ## Demo
@@ -57,14 +58,14 @@ const App = () => {
     autoplay: 'any',
     fluid: true,
     aspectRatio: '16:9',
-    poster: 'https://stream-image.byteark.com/image/video-cover-480p/7/K/7KPloVWgN.png',
+    poster: 'https://stream-image.byteark.com/image/video-cover-480p/7/H/7H6hEZrLH.png',
     sources: [
       {
-        src: 'https://byteark-playertzxedwv.stream-playlist.byteark.com/streams/ToIkm61TMn4Q/playlist.m3u8',
+        src: 'https://byteark-playertzxedwv.stream-playlist.byteark.com/streams/TZyZheqEJUwC/playlist.m3u8',
         type: 'application/x-mpegURL',
         title: 'Big Buck Bunny',
-        videoId: 'ToIkm61TMn4Q',
-        poster: 'https://stream-image.byteark.com/image/video-cover-480p/7/K/7KPloVWgN.png'
+        videoId: 'TZyZheqEJUwC',
+        poster: 'https://stream-image.byteark.com/image/video-cover-480p/7/H/7H6hEZrLH.png'
       }
     ]
   }
@@ -87,14 +88,14 @@ const App = () => {
   const playerOptions: ByteArkPlayerContainerProps = {
     autoplay: 'any',
     fill: true,
-    poster: 'https://stream-image.byteark.com/image/video-cover-480p/7/K/7KPloVWgN.png',
+    poster: 'https://stream-image.byteark.com/image/video-cover-480p/7/H/7H6hEZrLH.png',
     sources: [
       {
-        src: 'https://byteark-playertzxedwv.stream-playlist.byteark.com/streams/ToIkm61TMn4Q/playlist.m3u8',
+        src: 'https://byteark-playertzxedwv.stream-playlist.byteark.com/streams/TZyZheqEJUwC/playlist.m3u8',
         type: 'application/x-mpegURL',
         title: 'Big Buck Bunny',
-        videoId: 'ToIkm61TMn4Q',
-        poster: 'https://stream-image.byteark.com/image/video-cover-480p/7/K/7KPloVWgN.png'
+        videoId: 'TZyZheqEJUwC',
+        poster: 'https://stream-image.byteark.com/image/video-cover-480p/7/H/7H6hEZrLH.png'
       }
     ]
   }
@@ -209,10 +210,10 @@ const App = () => {
     fluid: true,
     sources: [
       {
-        src: 'https://byteark-playertzxedwv.stream-playlist.byteark.com/streams/ToIkm61TMn4Q/playlist.m3u8',
+        src: 'https://byteark-playertzxedwv.stream-playlist.byteark.com/streams/TZyZheqEJUwC/playlist.m3u8',
         type: 'application/x-mpegURL',
         title: 'Big Buck Bunny',
-        videoId: 'ToIkm61TMn4Q'
+        videoId: 'TZyZheqEJUwC'
       }
     ]
   }
@@ -246,16 +247,17 @@ const App = () => {
     fluid: true,
     sources: [
       {
-        src: 'https://byteark-playertzxedwv.stream-playlist.byteark.com/streams/ToIkm61TMn4Q/playlist.m3u8',
+        src: 'https://byteark-playertzxedwv.stream-playlist.byteark.com/streams/TZyZheqEJUwC/playlist.m3u8',
         type: 'application/x-mpegURL',
         title: 'Big Buck Bunny',
-        videoId: 'ToIkm61TMn4Q'
+        videoId: 'TZyZheqEJUwC'
       }
     ]
   }
 
   const onReady = (newPlayerInstance: ByteArkPlayer) => {
     // The player is ready! Initialize plugins here.
+    newPlayerInstance.somePlugin()
   }
 
   return <ByteArkPlayerContainer {...playerOptions} onReady={onReady} />
@@ -278,10 +280,10 @@ const App = () => {
     fluid: true,
     sources: [
       {
-        src: 'https://byteark-playertzxedwv.stream-playlist.byteark.com/streams/ToIkm61TMn4Q/playlist.m3u8',
+        src: 'https://byteark-playertzxedwv.stream-playlist.byteark.com/streams/TZyZheqEJUwC/playlist.m3u8',
         type: 'application/x-mpegURL',
         title: 'Big Buck Bunny',
-        videoId: 'ToIkm61TMn4Q'
+        videoId: 'TZyZheqEJUwC'
       }
     ],
     html5: {
@@ -301,6 +303,109 @@ const App = () => {
 }
 ```
 
+### Use with Next.js
+
+ByteArkPlayer required HTML DOM element and browser-specific APIs to use with Next.js additional steps
+
+1. Create `byteark-player.tsx` file and make it to be client component by adding `"use client"` directive at the top of a file.
+
+```jsx
+"use client";
+
+import { ByteArkPlayerContainer } from "byteark-player-react";
+
+export default ByteArkPlayerContainer;
+```
+
+2. In component that you want to use ByteArkPlayer, dynamic load `ByteArkPlayerContainer` component
+
+```jsx
+"use client"
+
+import dynamic from "next/dynamic"
+
+// Use nextjs dynamic to make sure that HTML Dom element is rendered before load player
+const ByteArkPlayerContainer = dynamic(
+  () => import("./byteark-player"),
+  {
+    // disable ssr (disable server-rendering)
+    ssr: false,
+    loading: () => (
+      <div className="flex aspect-video size-full items-center justify-center bg-black p-0 px-2">
+        <span className="text-center text-lg text-white"></span>
+      </div>
+    ),
+  }
+);
+```
+
+3. Using ByteArkPlayerContainer client component in your component
+
+```jsx
+export default function VideoPreviewPage() {
+  const playerOptions: ByteArkPlayerContainerProps = {
+    autoplay: 'any',
+    fluid: true,
+    sources: [
+      {
+        src: 'https://byteark-playertzxedwv.stream-playlist.byteark.com/streams/TZyZheqEJUwC/playlist.m3u8',
+        type: 'application/x-mpegURL',
+        title: 'Big Buck Bunny',
+        videoId: 'TZyZheqEJUwC'
+      }
+    ],
+  }
+
+  return <ByteArkPlayerContainer {...playerOptions} />
+}
+```
+
+Full example with Next.js
+
+```jsx
+// byteark-player.tsx
+"use client";
+
+import { ByteArkPlayerContainer } from "byteark-player-react";
+
+export default ByteArkPlayerContainer;
+
+// video-preview-page.tsx
+"use client";
+import React from 'react'
+import { render } from 'react-dom'
+import type { ByteArkPlayerContainerProps } from 'byteark-player-react'
+import dynamic from "next/dynamic"
+
+const ByteArkPlayerContainer = dynamic(
+  () => import("./byteark-player"),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex aspect-video size-full items-center justify-center bg-black p-0 px-2">
+        <span className="text-center text-lg text-white"></span>
+      </div>
+    ),
+  }
+);
+
+export default function VideoPreviewPage() {
+  const playerOptions: ByteArkPlayerContainerProps = {
+    autoplay: 'any',
+    fluid: true,
+    sources: [
+      {
+        src: 'https://byteark-playertzxedwv.stream-playlist.byteark.com/streams/TZyZheqEJUwC/playlist.m3u8',
+        type: 'application/x-mpegURL',
+        title: 'Big Buck Bunny',
+        videoId: 'TZyZheqEJUwC'
+      }
+    ],
+  }
+
+  return <ByteArkPlayerContainer {...playerOptions} />
+}
+```
 
 ## License
 
