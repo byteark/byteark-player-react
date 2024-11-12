@@ -131,7 +131,9 @@ export default function ByteArkPlayerContainer(
     if (lazyload) {
       await initializePlayer()
 
-      await playerRef.current?.play()
+      setTimeout(async () => {
+        await playerRef.current?.play()
+      }, 100)
     }
 
     setPlayerContainerState((prevState) => ({
