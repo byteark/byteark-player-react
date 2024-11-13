@@ -125,15 +125,17 @@ export default function ByteArkPlayerContainer(
     if (playerRef.current) {
       rest.onReady && rest.onReady(playerRef.current)
     }
+
+    if (lazyload) {
+      requestAnimationFrame(async () => {
+        await playerRef.current?.play()
+      })
+    }
   }
 
   const onClickPlaceholder = async () => {
     if (lazyload) {
       await initializePlayer()
-
-      setTimeout(async () => {
-        await playerRef.current?.play()
-      }, 100)
     }
 
     setPlayerContainerState((prevState) => ({
