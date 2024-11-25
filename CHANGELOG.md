@@ -1,3 +1,7 @@
+## [3.0.3](https://github.com/byteark/byteark-player-react/compare/v3.0.2...v3.0.3) (2024-11-25)
+
+
+
 ## [3.0.2](https://github.com/byteark/byteark-player-react/compare/v3.0.1...v3.0.2) (2024-11-13)
 
 
