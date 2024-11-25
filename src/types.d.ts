@@ -118,6 +118,7 @@ export interface ByteArkPlayerOptions extends videojs.PlayerOptions {
     }
   }
   plugins?: ByteArkPlayerPlugins
+  [key: string]: unknown
 }
 
 export interface ByteArkPlayerPlugins {
