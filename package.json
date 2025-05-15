@@ -18,9 +18,9 @@
   "source": "./src/index.ts",
   "exports": {
     ".": {
+      "types": "./dist/byteark-player-react.d.ts",
       "import": "./dist/byteark-player-react.js",
-      "require": "./dist/byteark-player-react.umd.cjs",
-      "types": "./dist/byteark-player-react.d.ts"
+      "require": "./dist/byteark-player-react.umd.cjs"
     }
   },
   "engines": {
