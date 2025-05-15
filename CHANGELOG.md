@@ -1,3 +1,17 @@
+## [3.0.4](https://github.com/byteark/byteark-player-react/compare/v3.0.3...v3.0.4) (2025-05-15)
+
+
+### Bug Fixes
+
+* warning in package.json ([ce2628a](https://github.com/byteark/byteark-player-react/commit/ce2628a43ba08d27e3b22b5d2727bea8b3093259))
+
+
+### Features
+
+* reset component state and clear resource when component unmounted ([29f4f33](https://github.com/byteark/byteark-player-react/commit/29f4f33a8cf02d9146f4e24ea7fde4f0ff214d85))
+
+
+
 ## [3.0.3](https://github.com/byteark/byteark-player-react/compare/v3.0.2...v3.0.3) (2024-11-25)
 
 
