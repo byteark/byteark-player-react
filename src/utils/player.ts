@@ -26,6 +26,7 @@ type LoadPlayerResourceConfig = Pick<
 
 export async function loadPlayerResources(config: LoadPlayerResourceConfig) {
   try {
+    console.log('Loading player resources...')
     const {
       playerJsFileName,
       playerCssFileName,
@@ -83,6 +84,14 @@ export async function loadPlayerResources(config: LoadPlayerResourceConfig) {
   } catch (error) {
     throw new LoadPlayerResourceError('Failed to load player resources', error)
   }
+}
+
+export function clearPlayerResources() {
+  document.querySelectorAll('[id^="byteark-player-"]').forEach((el) => {
+    if (el.tagName === 'SCRIPT' || el.tagName === 'LINK') {
+      el.remove()
+    }
+  })
 }
 
 export async function setupPlayerOptions(options: ByteArkPlayerOptions) {

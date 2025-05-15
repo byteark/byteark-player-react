@@ -7,6 +7,7 @@ export {
 } from './functions'
 export {
   loadPlayerResources,
+  clearPlayerResources,
   setupPlayerOptions,
   setupPlayer,
   createPlayerInstance

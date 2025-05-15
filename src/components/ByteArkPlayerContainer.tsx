@@ -12,6 +12,7 @@ import {
   updatePlayerProps,
   checkIfCanUseDOM,
   loadPlayerResources,
+  clearPlayerResources,
   setupPlayerOptions,
   setupPlayer,
   createPlayerInstance,
@@ -173,6 +174,7 @@ export default function ByteArkPlayerContainer(
         videoClasses.push('vjs-16-9')
       }
     }
+
     // React.RefAttributes<HTMLAudioElement>.ref?: React.LegacyRef<HTMLAudioElement> | undefined
     // React.RefAttributes<HTMLVideoElement>.ref?: React.LegacyRef<HTMLVideoElement> | undefined
     if (rest.audioOnlyMode) {
@@ -264,13 +266,30 @@ export default function ByteArkPlayerContainer(
     initIfNotLazyLoad()
 
     return () => {
+      // remove the player instance
       if (playerRef.current) {
         playerRef.current.dispose()
 
         playerRef.current = null
-
-        setPlayerContainerState((prevState) => ({ ...prevState, ready: false }))
       }
+
+      // reset state to initial
+      setPlayerContainerState((prevState) => ({
+        ...prevState,
+        loaded: false,
+        ready: false,
+        error: null,
+        showPlaceholder: true
+      }))
+
+      // remove the media element reference
+      mediaRef.current = null
+
+      // reset the initialize in progress flag
+      initializeInProgressRef.current = false
+
+      // remove the player resources
+      clearPlayerResources()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
