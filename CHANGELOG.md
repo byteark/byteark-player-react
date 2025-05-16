@@ -1,3 +1,14 @@
+## [3.0.5](https://github.com/byteark/byteark-player-react/compare/v3.0.4...v3.0.5) (2025-05-16)
+
+
+### Bug Fixes
+
+* conflict import type by import from @types/video.js ([3b4bbf5](https://github.com/byteark/byteark-player-react/commit/3b4bbf51c0768293a029890c5526dd659755294a))
+* lint error ([9bc87cd](https://github.com/byteark/byteark-player-react/commit/9bc87cdb34a953c2d2708fee658d48f740e33ff6))
+* player not render in some case ([384e336](https://github.com/byteark/byteark-player-react/commit/384e3363acec412505b3c85d7dad7e571e6cb7ca))
+
+
+
 ## [3.0.4](https://github.com/byteark/byteark-player-react/compare/v3.0.3...v3.0.4) (2025-05-15)
 
 
