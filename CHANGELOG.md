@@ -1,3 +1,15 @@
+# [3.1.0](https://github.com/byteark/byteark-player-react/compare/v3.0.5...v3.1.0) (2025-05-16)
+
+
+* chore(deps)!: update React to v19.1.0 ([49bb5e9](https://github.com/byteark/byteark-player-react/commit/49bb5e94f7411586d70cb72f5809a76183bebef4))
+
+
+### BREAKING CHANGES
+
+* upgrade React from v18.2.0 to v19.1.0
+
+
+
 ## [3.0.5](https://github.com/byteark/byteark-player-react/compare/v3.0.4...v3.0.5) (2025-05-16)
 
 
