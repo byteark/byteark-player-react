@@ -282,9 +282,6 @@ export default function ByteArkPlayerContainer(
         showPlaceholder: true
       }))
 
-      // remove the media element reference
-      mediaRef.current = null
-
       // reset the initialize in progress flag
       initializeInProgressRef.current = false
 
