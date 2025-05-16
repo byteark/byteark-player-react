@@ -1,1 +1,1 @@
-export { default as ByteArkPlayerContainer } from './ByteArkPlayerContainer'
+export { default as ByteArkPlayerContainer } from './ByteArkPlayerContainer';

@@ -1,7 +1,8 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import dts from 'vite-plugin-dts'
-import { resolve } from 'path'
+import { resolve } from 'path';
+
+import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
+import dts from 'vite-plugin-dts';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -12,15 +13,15 @@ export default defineConfig({
       outDir: 'dist',
       rollupTypes: true,
       copyDtsFiles: true,
-      insertTypesEntry: true
-    })
+      insertTypesEntry: true,
+    }),
   ],
   build: {
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
       name: 'ByteArkPlayerReact',
       fileName: 'byteark-player-react',
-      formats: ['umd', 'es']
+      formats: ['umd', 'es'],
     },
     copyPublicDir: false,
     rollupOptions: {
@@ -28,9 +29,9 @@ export default defineConfig({
       output: {
         globals: {
           react: 'React',
-          'react/jsx-runtime': 'jsxRuntime'
-        }
-      }
-    }
-  }
-})
+          'react/jsx-runtime': 'jsxRuntime',
+        },
+      },
+    },
+  },
+});

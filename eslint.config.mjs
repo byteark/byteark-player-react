@@ -1,32 +1,35 @@
 // @ts-check
 
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
-import { defineConfig, globalIgnores } from 'eslint/config'
-import globals from 'globals'
-import { fixupConfigRules } from '@eslint/compat'
-import tsParser from '@typescript-eslint/parser'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import prettier from 'eslint-plugin-prettier'
-import eslint from '@eslint/js'
-import { FlatCompat } from '@eslint/eslintrc'
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+import { fixupConfigRules } from '@eslint/compat';
+import { FlatCompat } from '@eslint/eslintrc';
+import eslint from '@eslint/js';
+// eslint-disable-next-line import/no-unresolved
+import tsParser from '@typescript-eslint/parser';
+// eslint-disable-next-line import/no-unresolved
+import { defineConfig, globalIgnores } from 'eslint/config';
+import prettier from 'eslint-plugin-prettier';
+import reactRefresh from 'eslint-plugin-react-refresh';
+import globals from 'globals';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const compat = new FlatCompat({
   baseDirectory: __dirname,
   recommendedConfig: eslint.configs.recommended,
-  allConfig: eslint.configs.all
-})
+  allConfig: eslint.configs.all,
+});
 
 export default defineConfig([
   {
     languageOptions: {
       globals: {
-        ...globals.browser
+        ...globals.browser,
       },
 
-      parser: tsParser
+      parser: tsParser,
     },
 
     extends: fixupConfigRules(
@@ -34,32 +37,81 @@ export default defineConfig([
         'eslint:recommended',
         'plugin:@typescript-eslint/recommended',
         'plugin:react-hooks/recommended',
-        'prettier'
-      )
+        'plugin:import/recommended',
+        'plugin:import/typescript',
+        'prettier',
+      ),
     ),
 
     plugins: {
       'react-refresh': reactRefresh,
-      prettier
+      prettier,
     },
 
     rules: {
       'react-refresh/only-export-components': [
         'warn',
         {
-          allowConstantExport: true
-        }
+          allowConstantExport: true,
+        },
       ],
 
-      'prettier/prettier': 'error'
-    }
+      'prettier/prettier': 'error',
+      semi: ['error', 'always'],
+      'comma-dangle': ['error', 'always-multiline'],
+      'max-len': [
+        'error',
+        {
+          code: 120,
+          ignoreUrls: true,
+          ignoreStrings: true,
+          ignoreComments: true,
+          ignoreTrailingComments: true,
+        },
+      ],
+      'newline-before-return': 'error',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+        },
+      ],
+      // https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/order.md
+      'import/order': [
+        'error',
+        {
+          groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object', 'type'],
+          'newlines-between': 'always',
+          alphabetize: {
+            order: 'asc',
+            caseInsensitive: true,
+          },
+        },
+      ],
+      // https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/extensions.md
+      'import/extensions': [
+        'error',
+        'never',
+        {
+          json: 'always',
+        },
+      ],
+      // https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/consistent-type-specifier-style.md
+      // https://typescript-eslint.io/blog/consistent-type-imports-and-exports-why-and-how/
+      'import/consistent-type-specifier-style': ['error', 'prefer-top-level'],
+      // https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/newline-after-import.md
+      'import/newline-after-import': ['error'],
+      'import/no-unresolved': [2, { commonjs: true }],
+    },
+    settings: {
+      'import/resolver': {
+        node: {
+          typescript: true,
+          extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
+        },
+      },
+    },
   },
-  globalIgnores([
-    '**/build/',
-    '**/dist/',
-    '**/node_modules/',
-    '**/.snapshots/',
-    '**/.eslintrc.mjs',
-    '**/*.min.js'
-  ])
-])
+  globalIgnores(['**/build/', '**/dist/', '**/node_modules/', '**/.snapshots/', '**/.eslintrc.mjs', '**/*.min.js']),
+]);

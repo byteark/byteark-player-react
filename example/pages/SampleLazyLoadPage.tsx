@@ -1,8 +1,10 @@
-import React from 'react'
-import { ByteArkPlayerContainer } from '../../src'
-import { SiteNav, VideoInfo } from '../components'
-import { videos } from '../videos'
-import type { ByteArkPlayerContainerProps } from '../../src/types'
+import React from 'react';
+
+import { ByteArkPlayerContainer } from '../../src';
+import { SiteNav, VideoInfo } from '../components';
+import { videos } from '../videos';
+
+import type { ByteArkPlayerContainerProps } from '../../src/types';
 
 const SampleLazyLoadPage = () => {
   const options: ByteArkPlayerContainerProps = {
@@ -15,16 +17,16 @@ const SampleLazyLoadPage = () => {
       {
         src: videos[0].src,
         type: videos[0].type,
-        title: videos[0].title
-      }
+        title: videos[0].title,
+      },
     ],
     onPlayerCreated: () => {
-      console.log('Created!')
+      console.log('Created!');
     },
     onReady: () => {
-      console.log('Ready!')
-    }
-  }
+      console.log('Ready!');
+    },
+  };
 
   return (
     <React.Fragment>
@@ -37,10 +39,7 @@ const SampleLazyLoadPage = () => {
               <ByteArkPlayerContainer {...options} />
             </div>
             <div className='mt-4'>
-              <VideoInfo
-                title={videos[0].title}
-                description={videos[0].description}
-              />
+              <VideoInfo title={videos[0].title} description={videos[0].description} />
             </div>
             <h4 className='mt-4'>Code</h4>
             <pre
@@ -48,7 +47,7 @@ const SampleLazyLoadPage = () => {
               style={{
                 backgroundColor: 'black',
                 color: 'white',
-                padding: '16px'
+                padding: '16px',
               }}
             >
               <code>
@@ -83,7 +82,7 @@ const SampleLazyLoadPage = () => {
         </div>
       </div>
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default SampleLazyLoadPage
+export default SampleLazyLoadPage;

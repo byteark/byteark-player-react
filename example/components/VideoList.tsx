@@ -1,13 +1,14 @@
-import VideoListItem from './VideoListItem'
-import type { IVideo } from '../videos'
+import VideoListItem from './VideoListItem';
+
+import type { IVideo } from '../videos';
 
 export interface VideoListProps {
-  videos: IVideo[]
-  onVideoSelected: (video: IVideo) => void
+  videos: IVideo[];
+  onVideoSelected: (video: IVideo) => void;
 }
 
 export default function VideoList(props: VideoListProps) {
-  const { onVideoSelected } = props
+  const { onVideoSelected } = props;
 
   return (
     <div>
@@ -23,5 +24,5 @@ export default function VideoList(props: VideoListProps) {
         ))}
       </ul>
     </div>
-  )
+  );
 }

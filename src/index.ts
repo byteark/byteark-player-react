@@ -1,5 +1,5 @@
-export { ByteArkPlayerContainer } from './components'
-export { isBrowserSupportDrm } from './utils'
+export { ByteArkPlayerContainer } from './components';
+export { isBrowserSupportDrm } from './utils';
 export type {
   ByteArkPlayer,
   ByteArkPlayerInfo,
@@ -25,5 +25,5 @@ export type {
   IOnPlayerLoadErrorFunction,
   IOnPlayerReadyFunction,
   IOnPlayerSetupFunction,
-  IOnPlayerSetupErrorFunction
-} from './types'
+  IOnPlayerSetupErrorFunction,
+} from './types';

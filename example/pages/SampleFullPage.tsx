@@ -1,6 +1,7 @@
-import { ByteArkPlayerContainer } from '../../src'
-import { videos } from '../videos'
-import type { ByteArkPlayerContainerProps } from '../../src/types'
+import { ByteArkPlayerContainer } from '../../src';
+import { videos } from '../videos';
+
+import type { ByteArkPlayerContainerProps } from '../../src/types';
 
 const SampleFullPage = () => {
   const options: ByteArkPlayerContainerProps = {
@@ -11,10 +12,10 @@ const SampleFullPage = () => {
       {
         src: videos[0].src,
         type: videos[0].type,
-        title: videos[0].title
-      }
-    ]
-  }
+        title: videos[0].title,
+      },
+    ],
+  };
 
   return (
     <div
@@ -25,12 +26,12 @@ const SampleFullPage = () => {
         right: 0,
         top: 0,
         bottom: 0,
-        overflow: 'hidden'
+        overflow: 'hidden',
       }}
     >
       <ByteArkPlayerContainer {...options} />
     </div>
-  )
-}
+  );
+};
 
-export default SampleFullPage
+export default SampleFullPage;

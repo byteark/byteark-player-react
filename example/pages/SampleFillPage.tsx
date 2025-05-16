@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
-import { ByteArkPlayerContainer } from '../../src'
-import { SiteNav, VideoList, VideoInfo } from '../components'
-import { videos } from '../videos'
+import React, { useState } from 'react';
+
+import { ByteArkPlayerContainer } from '../../src';
+import { SiteNav, VideoList, VideoInfo } from '../components';
+import { videos } from '../videos';
 
 const SampleFillPage = () => {
-  const [video, setVideo] = useState(videos[0])
+  const [video, setVideo] = useState(videos[0]);
 
   const options = {
     fill: true,
@@ -14,16 +15,16 @@ const SampleFillPage = () => {
       {
         src: video.src,
         type: video.type,
-        title: video.title
-      }
+        title: video.title,
+      },
     ],
     onPlayerCreated: () => {
-      console.log('Created!')
+      console.log('Created!');
     },
     onReady: () => {
-      console.log('Ready!')
-    }
-  }
+      console.log('Ready!');
+    },
+  };
 
   return (
     <React.Fragment>
@@ -44,7 +45,7 @@ const SampleFillPage = () => {
               style={{
                 backgroundColor: 'black',
                 color: 'white',
-                padding: '16px'
+                padding: '16px',
               }}
             >
               <code>
@@ -80,7 +81,7 @@ const SampleFillPage = () => {
         </div>
       </div>
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default SampleFillPage
+export default SampleFillPage;

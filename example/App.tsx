@@ -1,4 +1,5 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom';
+
 import {
   SampleBlogPage,
   SampleFluidPage,
@@ -6,8 +7,8 @@ import {
   SampleFullPage,
   SampleAutoplayPage,
   SampleAdsPage,
-  SampleLazyLoadPage
-} from './pages'
+  SampleLazyLoadPage,
+} from './pages';
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
       <Route path='/lazyload' element={<SampleLazyLoadPage />} />
       <Route path={'/'} index={true} element={<SampleBlogPage />} />
     </Routes>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 export default function SiteHeader() {
   return (
@@ -17,5 +17,5 @@ export default function SiteHeader() {
         </ul>
       </div>
     </header>
-  )
+  );
 }

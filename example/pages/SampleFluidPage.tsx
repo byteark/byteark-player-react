@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
-import { ByteArkPlayerContainer } from '../../src'
-import { SiteNav, VideoList, VideoInfo } from '../components'
-import { videos } from '../videos'
-import type { ByteArkPlayerContainerProps } from '../../src/types'
+import React, { useState } from 'react';
+
+import { ByteArkPlayerContainer } from '../../src';
+import { SiteNav, VideoList, VideoInfo } from '../components';
+import { videos } from '../videos';
+
+import type { ByteArkPlayerContainerProps } from '../../src/types';
 
 const SampleFluidPage = () => {
-  const [video, setVideo] = useState(videos[0])
+  const [video, setVideo] = useState(videos[0]);
 
   const options: ByteArkPlayerContainerProps = {
     fluid: true,
@@ -16,16 +18,16 @@ const SampleFluidPage = () => {
       {
         src: video.src,
         type: video.type,
-        title: video.title
-      }
+        title: video.title,
+      },
     ],
     onPlayerCreated: () => {
-      console.log('Created!')
+      console.log('Created!');
     },
     onReady: () => {
-      console.log('Ready!')
-    }
-  }
+      console.log('Ready!');
+    },
+  };
 
   return (
     <React.Fragment>
@@ -46,7 +48,7 @@ const SampleFluidPage = () => {
               style={{
                 backgroundColor: 'black',
                 color: 'white',
-                padding: '16px'
+                padding: '16px',
               }}
             >
               <code>
@@ -83,7 +85,7 @@ const SampleFluidPage = () => {
         </div>
       </div>
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default SampleFluidPage
+export default SampleFluidPage;

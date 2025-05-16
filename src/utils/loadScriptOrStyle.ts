@@ -1,91 +1,88 @@
 function tryResolveSrcType(src: string): string | null {
   if (src.endsWith('.js')) {
-    return 'script'
+    return 'script';
   } else if (src.endsWith('.css')) {
-    return 'style'
+    return 'style';
   }
-  return null
+
+  return null;
 }
 
 function createScriptTat(id: string, src: string): Promise<void> {
   return new Promise<void>((resolve, reject) => {
-    const body = document.getElementsByTagName('head')[0]
+    const body = document.getElementsByTagName('head')[0];
 
-    const tag = document.createElement('script')
-    tag.id = id
-    tag.async = false
-    tag.src = src
+    const tag = document.createElement('script');
+    tag.id = id;
+    tag.async = false;
+    tag.src = src;
 
     tag.addEventListener('load', () => {
-      tag.setAttribute('data-load-completed', `${new Date().getTime()}`)
-      resolve()
-    })
+      tag.setAttribute('data-load-completed', `${new Date().getTime()}`);
+      resolve();
+    });
 
     tag.addEventListener('error', (error) => {
-      body.removeChild(tag)
-      reject(error)
-    })
+      body.removeChild(tag);
+      reject(error);
+    });
 
-    body.appendChild(tag)
-  })
+    body.appendChild(tag);
+  });
 }
 
 function createLinkStyleTag(id: string, src: string): Promise<void> {
   return new Promise((resolve, reject) => {
-    const body = document.getElementsByTagName('head')[0]
+    const body = document.getElementsByTagName('head')[0];
 
-    const tag = document.createElement('link')
-    tag.id = id
+    const tag = document.createElement('link');
+    tag.id = id;
 
-    tag.setAttribute('rel', 'stylesheet')
-    tag.setAttribute('type', 'text/css')
-    tag.setAttribute('href', src)
+    tag.setAttribute('rel', 'stylesheet');
+    tag.setAttribute('type', 'text/css');
+    tag.setAttribute('href', src);
 
     tag.addEventListener('load', () => {
-      tag.setAttribute('data-load-completed', `${new Date().getTime()}`)
-      resolve()
-    })
+      tag.setAttribute('data-load-completed', `${new Date().getTime()}`);
+      resolve();
+    });
 
     tag.addEventListener('error', (err) => {
-      body.removeChild(tag)
-      reject(err)
-    })
+      body.removeChild(tag);
+      reject(err);
+    });
 
-    body.appendChild(tag)
-  })
+    body.appendChild(tag);
+  });
 }
 
 function waitForTagLoad(tag: HTMLElement): Promise<void> {
   return new Promise((resolve, reject) => {
     if (tag.getAttribute('data-load-completed')) {
-      resolve()
+      resolve();
     }
 
-    tag.addEventListener('load', () => resolve())
+    tag.addEventListener('load', () => resolve());
 
-    tag.addEventListener('error', (err) => reject(err))
-  })
+    tag.addEventListener('error', (err) => reject(err));
+  });
 }
 
-export function loadScriptOrStyle(
-  id: string,
-  src: string,
-  type: 'script' | 'style'
-): Promise<void> {
-  const existingElement = document.getElementById(id)
+export function loadScriptOrStyle(id: string, src: string, type: 'script' | 'style'): Promise<void> {
+  const existingElement = document.getElementById(id);
 
   if (existingElement) {
-    return waitForTagLoad(existingElement)
+    return waitForTagLoad(existingElement);
   }
 
-  const resolvedType = type || tryResolveSrcType(src)
+  const resolvedType = type || tryResolveSrcType(src);
 
   switch (resolvedType) {
     case 'script':
-      return createScriptTat(id, src)
+      return createScriptTat(id, src);
     case 'style':
-      return createLinkStyleTag(id, src)
+      return createLinkStyleTag(id, src);
     default:
-      return Promise.reject(new Error('Not supported resource type'))
+      return Promise.reject(new Error('Not supported resource type'));
   }
 }
