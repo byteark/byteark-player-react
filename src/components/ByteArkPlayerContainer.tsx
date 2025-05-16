@@ -82,7 +82,9 @@ export default function ByteArkPlayerContainer(
     })
 
   const onPlayerLoaded = () => {
-    rest.onPlayerLoaded && rest.onPlayerLoaded()
+    if (rest.onPlayerLoaded) {
+      rest.onPlayerLoaded()
+    }
   }
 
   const onPlayerLoadError = (
@@ -91,13 +93,17 @@ export default function ByteArkPlayerContainer(
   ) => {
     setPlayerContainerState((prevState) => ({ ...prevState, error }))
 
-    rest.onPlayerLoadError && rest.onPlayerLoadError(error, originalError)
+    if (rest.onPlayerLoadError) {
+      rest.onPlayerLoadError(error, originalError)
+    }
   }
 
   const onPlayerSetup = () => {
     setPlayerContainerState((prevState) => ({ ...prevState, loaded: true }))
 
-    rest.onPlayerSetup && rest.onPlayerSetup()
+    if (rest.onPlayerSetup) {
+      rest.onPlayerSetup()
+    }
   }
 
   const onPlayerSetupError = (
@@ -106,7 +112,9 @@ export default function ByteArkPlayerContainer(
   ) => {
     setPlayerContainerState((prevState) => ({ ...prevState, error }))
 
-    rest.onPlayerSetupError && rest.onPlayerSetupError(error, originalError)
+    if (rest.onPlayerSetupError) {
+      rest.onPlayerSetupError(error, originalError)
+    }
   }
 
   const onPlayerCreated = () => {
@@ -115,16 +123,16 @@ export default function ByteArkPlayerContainer(
       showPlaceholder: false
     }))
 
-    if (playerRef.current) {
-      rest.onPlayerCreated && rest.onPlayerCreated(playerRef.current)
+    if (playerRef.current && rest.onPlayerCreated) {
+      rest.onPlayerCreated(playerRef.current)
     }
   }
 
   const onPlayerReady = () => {
     setPlayerContainerState((prevState) => ({ ...prevState, ready: true }))
 
-    if (playerRef.current) {
-      rest.onReady && rest.onReady(playerRef.current)
+    if (playerRef.current && rest.onReady) {
+      rest.onReady(playerRef.current)
     }
 
     if (lazyload) {
