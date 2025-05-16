@@ -1,6 +1,7 @@
-import videojs from 'video.js'
 import { ByteArkPlayerContainerError } from './utils'
 import type { ReactNode } from 'react'
+import type videojs from '@types/video.js'
+import type { VideoJsPlayer, VideoJsPlayerOptions } from '@types/video.js'
 
 declare global {
   interface Window {
@@ -26,7 +27,7 @@ declare module 'byteark-player-react' {
   export { ByteArkPlayerContainer }
 }
 
-export interface ByteArkPlayer extends videojs.Player {
+export interface ByteArkPlayer extends VideoJsPlayer {
   info: () => ByteArkPlayerInfo
   skipIntroTime: (time: number) => void
   qualityLevels: () => ByteArkPlayerQualityLevelItem[]
@@ -91,7 +92,7 @@ export interface AutoplayResult {
   muted: boolean
 }
 
-export interface ByteArkPlayerOptions extends videojs.PlayerOptions {
+export interface ByteArkPlayerOptions extends VideoJsPlayerOptions {
   autoplayResult_?: AutoplayResult
   autoplayadsmuted?: boolean
   autoSeekToLiveEdge?: boolean
