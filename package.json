@@ -51,8 +51,8 @@
   },
   "peerDependencies": {
     "@types/video.js": "^7.3.58",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
