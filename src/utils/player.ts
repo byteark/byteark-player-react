@@ -26,7 +26,6 @@ type LoadPlayerResourceConfig = Pick<
 
 export async function loadPlayerResources(config: LoadPlayerResourceConfig) {
   try {
-    console.log('Loading player resources...')
     const {
       playerJsFileName,
       playerCssFileName,
