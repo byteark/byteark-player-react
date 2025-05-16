@@ -1,3 +1,12 @@
+## [3.1.1](https://github.com/byteark/byteark-player-react/compare/v3.1.0...v3.1.1) (2025-05-16)
+
+
+### Bug Fixes
+
+* wrong react and react-dom version in peer dependencies ([699ebd7](https://github.com/byteark/byteark-player-react/commit/699ebd75788ba79fb85945fbe1fa993bb36fdd64))
+
+
+
 # [3.1.0](https://github.com/byteark/byteark-player-react/compare/v3.0.5...v3.1.0) (2025-05-16)
 
 
