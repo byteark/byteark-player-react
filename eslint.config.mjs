@@ -6,9 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { fixupConfigRules } from '@eslint/compat';
 import { FlatCompat } from '@eslint/eslintrc';
 import eslint from '@eslint/js';
-// eslint-disable-next-line import/no-unresolved
-import tsParser from '@typescript-eslint/parser';
-// eslint-disable-next-line import/no-unresolved
+import * as tsParser from '@typescript-eslint/parser';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import prettier from 'eslint-plugin-prettier';
 import reactRefresh from 'eslint-plugin-react-refresh';
@@ -106,8 +104,10 @@ export default defineConfig([
     },
     settings: {
       'import/resolver': {
+        typescript: {
+          alwaysTryTypes: true,
+        },
         node: {
-          typescript: true,
           extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
         },
       },
