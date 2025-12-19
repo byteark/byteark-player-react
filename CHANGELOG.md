@@ -1,3 +1,18 @@
+## [3.1.2](https://github.com/byteark/byteark-player-react/compare/v3.1.1...v3.1.2) (2025-12-19)
+
+
+### Chores
+
+* update all dependencies to latest versions ([dcabe92](https://github.com/byteark/byteark-player-react/commit/dcabe92))
+* update react peerDependencies to ^19.2.3 ([5b29a32](https://github.com/byteark/byteark-player-react/commit/5b29a32))
+
+
+### Documentation
+
+* simplify Next.js usage section in README ([6b752a0](https://github.com/byteark/byteark-player-react/commit/6b752a0))
+
+
+
 ## [3.1.1](https://github.com/byteark/byteark-player-react/compare/v3.1.0...v3.1.1) (2025-05-16)
 
 
