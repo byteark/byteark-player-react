@@ -305,44 +305,37 @@ const App = () => {
 
 ### Use with Next.js
 
-ByteArkPlayer required HTML DOM element and browser-specific APIs to use with Next.js additional steps
+ByteArk Player requires browser APIs, so it needs to be loaded as a client component with SSR disabled in Next.js App Router.
 
-1. Create `byteark-player.tsx` file and make it to be client component by adding `"use client"` directive at the top of a file.
+**Step 1.** Create a client component wrapper (`byteark-player.tsx`):
 
-```jsx
-"use client";
+```tsx
+'use client';
 
-import { ByteArkPlayerContainer } from "byteark-player-react";
+import { ByteArkPlayerContainer } from 'byteark-player-react';
 
 export default ByteArkPlayerContainer;
 ```
 
-2. In component that you want to use ByteArkPlayer, dynamic load `ByteArkPlayerContainer` component
+**Step 2.** Use dynamic import in your page component:
 
-```jsx
-"use client"
+```tsx
+'use client';
 
-import dynamic from "next/dynamic"
+import dynamic from 'next/dynamic';
 
-// Use nextjs dynamic to make sure that HTML Dom element is rendered before load player
-const ByteArkPlayerContainer = dynamic(
-  () => import("./byteark-player"),
-  {
-    // disable ssr (disable server-rendering)
-    ssr: false,
-    loading: () => (
-      <div className="flex aspect-video size-full items-center justify-center bg-black p-0 px-2">
-        <span className="text-center text-lg text-white"></span>
-      </div>
-    ),
-  }
-);
-```
+import type { ByteArkPlayerContainerProps } from 'byteark-player-react';
 
-3. Using ByteArkPlayerContainer client component in your component
+const ByteArkPlayerContainer = dynamic(() => import('./byteark-player'), {
+  ssr: false,
+  loading: () => (
+    <div className='flex aspect-video w-full items-center justify-center bg-black'>
+      <span className='text-white'>Loading player...</span>
+    </div>
+  ),
+});
 
-```jsx
-export default function VideoPreviewPage() {
+export default function VideoPage() {
   const playerOptions: ByteArkPlayerContainerProps = {
     autoplay: 'any',
     fluid: true,
@@ -351,59 +344,12 @@ export default function VideoPreviewPage() {
         src: 'https://byteark-playertzxedwv.stream-playlist.byteark.com/streams/TZyZheqEJUwC/playlist.m3u8',
         type: 'application/x-mpegURL',
         title: 'Big Buck Bunny',
-        videoId: 'TZyZheqEJUwC'
-      }
+        videoId: 'TZyZheqEJUwC',
+      },
     ],
-  }
+  };
 
-  return <ByteArkPlayerContainer {...playerOptions} />
-}
-```
-
-Full example with Next.js
-
-```jsx
-// byteark-player.tsx
-"use client";
-
-import { ByteArkPlayerContainer } from "byteark-player-react";
-
-export default ByteArkPlayerContainer;
-
-// video-preview-page.tsx
-"use client";
-import React from 'react'
-import { render } from 'react-dom'
-import type { ByteArkPlayerContainerProps } from 'byteark-player-react'
-import dynamic from "next/dynamic"
-
-const ByteArkPlayerContainer = dynamic(
-  () => import("./byteark-player"),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="flex aspect-video size-full items-center justify-center bg-black p-0 px-2">
-        <span className="text-center text-lg text-white"></span>
-      </div>
-    ),
-  }
-);
-
-export default function VideoPreviewPage() {
-  const playerOptions: ByteArkPlayerContainerProps = {
-    autoplay: 'any',
-    fluid: true,
-    sources: [
-      {
-        src: 'https://byteark-playertzxedwv.stream-playlist.byteark.com/streams/TZyZheqEJUwC/playlist.m3u8',
-        type: 'application/x-mpegURL',
-        title: 'Big Buck Bunny',
-        videoId: 'TZyZheqEJUwC'
-      }
-    ],
-  }
-
-  return <ByteArkPlayerContainer {...playerOptions} />
+  return <ByteArkPlayerContainer {...playerOptions} />;
 }
 ```
 
