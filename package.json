@@ -86,7 +86,7 @@
     "react-router-dom": "^7.11.0",
     "rimraf": "^6.1.2",
     "typescript": "^5.9.3",
-    "vite": "^6.4.1",
+    "vite": "^8.0.16",
     "vite-plugin-dts": "^4.5.4"
   },
   "dependencies": {
